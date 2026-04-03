@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+body {
+  background-color: #ffffff;
+}
+
+/* Global site container — 1315px content area (1347 - 32px padding) */
+.site-container {
+  max-width: 1347px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Logo dot color cycling animation */
+@keyframes dot-color-cycle {
+  0%   { color: #FF6B6B; }
+  14%  { color: #FFD93D; }
+  28%  { color: #6BCB77; }
+  42%  { color: #4D96FF; }
+  57%  { color: #9B59B6; }
+  71%  { color: #FF9FF3; }
+  85%  { color: #00D2D3; }
+  100% { color: #FF6B6B; }
+}
+
+.logo-dot {
+  animation: dot-color-cycle 4s linear infinite;
+}
+
+/* ── Liquid fill hover effect ── */
+@layer utilities {
+  .liquid-fill {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+  }
+
+  .liquid-fill-circle {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+  }
+
+  .liquid-fill-white {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+  }
+
+  .liquid-fill-blue {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+  }
+
+  .liquid-fill-top {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+  }
+}
+
+.liquid-fill::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #1a1a1a;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.liquid-fill:hover::before {
+  width: 300%;
+  height: 300%;
+  border-radius: 0;
+}
+
+.liquid-fill:hover {
+  color: #ffffff !important;
+}
+
+/* Variant for circles — fill from center */
+.liquid-fill-circle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #1a1a1a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.liquid-fill-circle:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+.liquid-fill-circle:hover {
+  color: #ffffff !important;
+}
+
+/* White fill — for dark bg buttons (black bg → white fill) */
+.liquid-fill-white::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.liquid-fill-white:hover::before {
+  width: 300%;
+  height: 300%;
+  border-radius: 0;
+}
+
+.liquid-fill-white:hover {
+  color: #0A0A0A !important;
+}
+
+/* Blue fill — for blue bg elements */
+.liquid-fill-blue::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.liquid-fill-blue:hover::before {
+  width: 300%;
+  height: 300%;
+  border-radius: 0;
+}
+
+.liquid-fill-blue:hover {
+  color: #1D349A !important;
+}
+
+/* Top-to-bottom fill — for vertical elements */
+.liquid-fill-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #ffffff;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.liquid-fill-top:hover::before {
+  height: 100%;
+}
+
+.liquid-fill-top:hover {
+  color: #1D349A !important;
+}

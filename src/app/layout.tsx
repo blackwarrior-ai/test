@@ -1,0 +1,31 @@
+import type { Metadata } from "next";
+import { Instrument_Sans, Poppins } from "next/font/google";
+import "./globals.css";
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+export const logoFont = Poppins({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-logo",
+});
+
+export const metadata: Metadata = {
+  title: "HYPER - Premium Furniture Store",
+  description: "Shop premium furniture for every room",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body className={`${instrumentSans.className} ${logoFont.variable} text-[15px] font-medium antialiased`} suppressHydrationWarning>{children}</body>
+    </html>
+  );
+}

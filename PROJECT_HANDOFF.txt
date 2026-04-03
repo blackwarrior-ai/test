@@ -1,0 +1,364 @@
+================================================================================
+  PROJECT HANDOFF DOCUMENT — HYPER / DIGILINK NEXT.JS THEME
+  (Dusre AI ke liye — yaha se kaam shuru karo)
+================================================================================
+
+TECH STACK
+──────────────────────────────────────────────────────────────────────────────
+- Framework   : Next.js 16 (App Router)
+- Language    : TypeScript
+- Styling     : Tailwind CSS v4 (via @tailwindcss/postcss)
+- Fonts       : Instrument Sans (body), Poppins (logo) — Google Fonts via next/font
+- Icons       : react-icons v5  (fa, fa6, hi, hi2, io5, sl, bs)
+- Runtime     : React 19
+
+START COMMAND: npm run dev
+BUILD COMMAND: npm run build
+
+================================================================================
+FOLDER STRUCTURE
+================================================================================
+
+src/
+  app/
+    globals.css       — Global styles, site-container, liquid-fill animations
+    layout.tsx        — Root layout, font setup, metadata
+    page.tsx          — Homepage (renders all sections in order)
+  components/
+    Header/
+      index.tsx       — Smart sticky header shell (scroll logic lives here)
+      TopBar.tsx      — Tier 1: Blue announcement bar + country selector
+      MainHeader.tsx  — Tier 2: Logo, search bar, icons
+      BottomNav.tsx   — Tier 3: Nav links bar
+    Home/
+      CategoryCarousel.tsx  — Draggable category icon row
+      HeroBanner.tsx        — Auto-play hero slider
+      NewArrivals.tsx       — Product card scroll row with progress bar
+      FlashSaleBanner.tsx   — Yellow countdown flash sale banner
+      SpecialOffersTab.tsx  — Fixed right-side vertical blue tab
+
+================================================================================
+SITE-WIDE DESIGN RULES (IMPORTANT — must follow in all future work)
+================================================================================
+
+1. MAX WIDTH & PADDING
+   - Content max-width: 1347px
+   - Left/right padding: 16px (both sides)
+   - Standard wrapper class: "max-w-[1347px] mx-auto px-[16px]"
+
+2. BASE FONT
+   - Body text: 15px, font-medium, Instrument Sans
+   - Applied globally on <body> in layout.tsx
+
+3. LOGO
+   - Text: "Digilink" + a dot
+   - Font: Poppins 700/800 via CSS var --font-logo
+   - Dot has class "logo-dot" which runs an infinite color-cycle animation
+     (red → yellow → green → blue → purple → pink → cyan → repeat, 4s loop)
+   - Desktop size: text-[28px], Mobile: text-[24px]
+
+4. BRAND BLUE COLOR: #1D349A  (used in TopBar bg, SpecialOffersTab, BottomNav hover)
+
+5. LIQUID FILL ANIMATIONS (MANDATORY on ALL clickable/interactive elements)
+   These CSS classes are defined in globals.css. ALWAYS use them instead of
+   hover:bg-* classes (they conflict). Each has overflow:hidden built in.
+
+   .liquid-fill        → Black fill from bottom-center. Use on light bg elements.
+                          Hover: text turns white.
+   .liquid-fill-circle → Black fill from center (circle). Use on round buttons.
+                          Hover: text turns white.
+   .liquid-fill-white  → White fill from bottom-center. Use on dark/black bg elements.
+                          Hover: text turns dark (#0A0A0A).
+   .liquid-fill-blue   → White fill from bottom. Use on blue (#1D349A) bg elements.
+                          Hover: text turns #1D349A (brand blue).
+   .liquid-fill-top    → White fill top-to-bottom. Use on vertical blue elements.
+                          Hover: text turns #1D349A.
+
+   Rules:
+   - Every button, card, clickable box, circle gets one of these
+   - Remove old hover:bg-* classes when adding liquid-fill
+   - Icons inside these elements should NOT have hardcoded text-gray-* colors
+     (they inherit color automatically on hover)
+
+================================================================================
+WHAT'S BUILT — SECTION BY SECTION
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+HEADER  (src/components/Header/)
+────────────────────────────────────────────────────────────────────────────────
+
+ARCHITECTURE:
+The header is a 3-tier sticky header with scroll-aware behavior.
+
+index.tsx — The shell/orchestrator:
+  - Fixed positioned, z-50
+  - Tracks: topBarHeight, headerOffset, navCollapsed, menuOpen
+  - On scroll: TopBar slides up (offset = min(scrollY, topBarHeight))
+    → MainHeader + BottomNav stay visible
+  - When scrollY > topBarHeight: navCollapsed = true → BottomNav hides
+  - A hamburger button appears in MainHeader when scrolled — clicking it
+    toggles menuOpen which shows BottomNav again (dropdown style)
+  - A spacer div below the header prevents content jump
+
+TIER 1 — TopBar.tsx (blue bar, always at top):
+  - bg-[#1D349A], white text
+  - Left: Help Center | Find a Store | Contact links (hidden on mobile)
+  - Center: "Free Express Shipping on orders $500!" announcement
+  - Right: Country selector dropdown + social icons (FB, Instagram, TikTok, X)
+  - Country selector:
+    * 10 countries listed (Australia, Austria, Belgium, Canada, Czechia,
+      Denmark, Finland, France, Germany, Hong Kong SAR)
+    * Each has a CSS-rendered flag (no image files needed)
+    * Default selected: Belgium (index 2)
+    * Dropdown closes on outside click (useRef + mousedown listener)
+    * Dropdown styled in matching blue bg with white/10 hover
+
+TIER 2 — MainHeader.tsx (white bar, always visible when scrolled):
+  - Desktop layout (lg+):
+    * Left: Hamburger (appears ONLY when scrolled) + Logo
+    * Center: Search bar (600px wide, rounded-full, bg-[#EDEDED])
+              → Has "All Categories" dropdown button on left
+              → Text input in middle
+              → Search icon button on right
+    * Right: "Find a store" (with location icon), "Sign in/ Register"
+             (with user icon), Cart icon button (round, 40x40)
+  - Mobile layout (below lg):
+    * Row 1: Hamburger | Logo (centered) | Cart icon
+    * Row 2: Full-width search bar (border-rounded, bg-white)
+  - Hamburger uses animated 3-bar → X transition (pure CSS via transforms)
+  - MenuIcon component: 3 <span> bars, animates to X when open=true
+
+TIER 3 — BottomNav.tsx:
+  - Bg white, border-bottom gray-200
+  - Hidden on mobile (hidden lg:flex)
+  - Height: 46px
+  - Nav items (with dropdown chevrons where applicable):
+    1. Shop By Categories (dropdown)
+    2. Shop By Room (dropdown)
+    3. Tables & Desks (dropdown)
+    4. Chairs & Stools (dropdown)
+    5. Pages (dropdown)
+    6. Theme Features (dropdown)
+    7. On Sale (NO dropdown, text-red-600 — highlighted)
+  - Hover: text-[#1a1acd]
+  - NOTE: No actual dropdowns are implemented yet — just the link + chevron UI
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 1 — CategoryCarousel.tsx
+────────────────────────────────────────────────────────────────────────────────
+
+- Full-width section, py-6
+- Horizontally scrollable row of category circles
+- 11 categories: Spoke Sofa, Storage (has arrow), Turn Chairs, Chairs,
+  Curve Coat, Bend Chairs, Accessories, Tables, Bar Chairs, Lamps, Shelving
+- Each item: 110px min-width, circle 90x90px (bg-[#F5F5F5]),
+  placeholder image box inside, label below
+- Circle uses: liquid-fill-circle class
+- Left/Right arrow buttons:
+  * Appear only on hover (opacity 0→1, scale 0.75→1, transition 0.3s)
+  * Custom liquid fill: white base + black overlay that scale-0 → scale-100
+    on group-hover (CSS group trick)
+  * Arrow icons: text changes black → white via group-hover:text-white
+- Drag to scroll:
+  * mousedown → saves startX and scrollLeft
+  * mousemove (global) → scrolls proportionally (1.5x multiplier)
+  * mouseup (global) → stops drag, re-enables scroll-snap
+  * scrollSnapType: "x mandatory" on container (disabled during drag)
+- Image paths: /categories/[name].webp (placeholder gray boxes for now)
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 2 — HeroBanner.tsx
+────────────────────────────────────────────────────────────────────────────────
+
+- Full-width slider inside max-width container
+- Aspect ratio: 1315:520 (matches content width proportionally)
+- Rounded corners: rounded-xl
+- 3 slides:
+  1. "Contemporary Grace" / "Dining & Kitchen" — bgColor #7A6A5B
+  2. "Modern Living" / "Living Room" — bgColor #5B6A7A
+  3. "Elegant Comfort" / "Bedroom" — bgColor #6A5D4B (typo: was #6A5B7A in code)
+- Each slide:
+  * Solid bg color (placeholder — replace with next/image later)
+  * Dark gradient overlay: from-black/20 via-black/30 to-black/50
+  * Centered text: subtitle (sm), title (3xl→64px responsive), CTA button
+  * CTA button: liquid-fill-white class, border-2 border-white, rounded-full
+- Auto-plays every 5 seconds
+- Navigation:
+  * Prev/Next button: bottom-left / bottom-right, bg-white/20 backdrop-blur
+  * Dot indicators: center-bottom, active dot = 8x2.5px pill, inactive = circle
+- Transition: opacity fade 600ms ease-in-out between slides
+- isTransitioning guard prevents rapid clicks
+
+────────────────────────────────────────────────────────────────────────────────
+SECTION 3 — NewArrivals.tsx
+────────────────────────────────────────────────────────────────────────────────
+
+- py-10 lg:py-14
+- Header row:
+  * Left: "New Arrivals" h2 + subtitle text
+  * Right: Tab switcher "New Arrivals" | "Hot Items"
+    (active = border-b-2 border-gray-900, inactive = text-gray-400)
+- Horizontally scrollable product row (no scrollbar, scrollbarWidth:none)
+- First item is a Promotion card:
+  * Width: 280px (lg: 300px), min-height 420px, rounded-xl
+  * Bg: gradient brown (#8A7D6B→#7A6D5B→#6A5D4B)
+  * Content: "Promotion" label (gold color), "Soft Stools Design" h3 (white)
+  * CTA: liquid-fill button (white bg, dark text) — "Shop Now"
+- 6 Product cards (width 220px, lg:240px):
+  1. Cross Chair Heritage — CHAIRS — $589
+  2. Ray Sofa Basic — SOFAS — $3,289
+  3. Turn Chair Vivid — CHAIRS — $309
+  4. Loop Sofa Armrest — SOFA — $3,289
+  5. Pixel Shelf — FLOATING — $85
+  6. Edge Table Round — TABLES — $429
+  Each card:
+  * Image area: liquid-fill class, aspect-[1/1.1], rounded-xl, bg-[#F3F3F3]
+    (placeholder gray box — replace with real images later)
+  * Category label: 11px, gray-400, uppercase tracking-wider
+  * Product name: 15px semibold
+  * Price: 15px bold
+  * Color swatches: small circular buttons (w-5 h-5) with hover:ring-2
+- Bottom bar:
+  * Scroll progress: thin 2px gray bar with dark sliding indicator
+    (30% width tracker that translateX based on scrollProgress)
+  * Arrows: liquid-fill-circle, w-10 h-10, rounded-full, border-gray-300
+
+────────────────────────────────────────────────────────────────────────────────
+FLASH SALE BANNER — FlashSaleBanner.tsx
+────────────────────────────────────────────────────────────────────────────────
+
+- pb-2 lg:pb-3 (snug between sections)
+- Rounded-2xl, bg-[#F4F691] (bright yellow-green), min-h 90px→140px
+- 4 items in a row (flex-col on mobile, flex-row on desktop):
+  1. "Flash Sale now on!" label — font-bold
+  2. Live countdown: Days:Hours:Minutes:Seconds
+     * Target = from page load + 1d 23h 47m 16s
+     * Numbers: text-[36px→46px] font-black tabular-nums tracking-tight
+     * Separator colons: text-[22px→28px] font-normal
+     * Updates every 1 second via setInterval
+  3. "Save on modern table office, best sellers + more" — small text
+  4. CTA button: liquid-fill-white class, bg-[#0A0A0A], white text
+     Rounded-full, px-8 py-4, "Use Code: FLASH30"
+
+────────────────────────────────────────────────────────────────────────────────
+SPECIAL OFFERS TAB — SpecialOffersTab.tsx
+────────────────────────────────────────────────────────────────────────────────
+
+- Fixed right-side vertical tab (position: fixed, right:0, top:50%, z-[60])
+- bg-[#1D349A], white text, rounded-l-lg (left side rounded)
+- liquid-fill-top class (white fill top-to-bottom on hover → text turns brand blue)
+- Contents top to bottom:
+  1. Chat icon (BsChatDots, 5x5)
+  2. Vertical text: "Special Offers For You" (writingMode: vertical-rl)
+  3. Close (X) button — sets visible=false, tab disappears
+- Only renders if visible=true (useState)
+
+================================================================================
+HOMEPAGE ORDER (page.tsx)
+================================================================================
+
+1. <Header />
+2. <CategoryCarousel />     ← Section 1
+3. <HeroBanner />           ← Section 2
+4. <NewArrivals />          ← Section 3
+5. <FlashSaleBanner />      ← Between sections (not numbered)
+6. <SpecialOffersTab />     ← Fixed overlay (not in flow)
+7. Placeholder divs (10 × "Section 4, 5, 6...") ← TODO sections
+
+================================================================================
+WHAT'S NOT BUILT YET (TODO)
+================================================================================
+
+- Real images (all images are placeholder gray boxes — paths defined but files missing)
+  * /categories/*.webp
+  * /hero/slide-1.webp, slide-2.webp, slide-3.webp
+  * /products/*.webp
+
+- BottomNav dropdowns (chevrons are there, but no dropdown opens)
+
+- "All Categories" dropdown in search bar
+
+- Mobile hamburger menu panel/drawer
+
+- Sections 4+ (shown as gray placeholders in page.tsx)
+  Likely upcoming: Featured Categories, Best Sellers, Testimonials, Newsletter, Footer
+
+- Actual routing (all hrefs are placeholder: /collections/dining-kitchen etc.)
+
+- Cart functionality
+
+- Search functionality
+
+- Country selector — currently only UI, no currency logic
+
+================================================================================
+HOW TO EDIT EACH COMPONENT
+================================================================================
+
+TO CHANGE LOGO NAME:
+  → MainHeader.tsx → find "Digilink" → change text
+
+TO ADD/REMOVE NAV ITEMS:
+  → BottomNav.tsx → edit the navItems array
+
+TO CHANGE HERO SLIDES:
+  → HeroBanner.tsx → edit the slides[] array
+    Each slide: { id, subtitle, title, cta, href, image, bgColor }
+
+TO CHANGE PRODUCT CARDS:
+  → NewArrivals.tsx → edit the products[] array
+    Each product: { category, name, price, image, colors[] }
+    colors[] is array of hex strings for swatches
+
+TO CHANGE CATEGORY CIRCLES:
+  → CategoryCarousel.tsx → edit the categories[] array
+    Each: { label, image, hasArrow? }
+
+TO CHANGE FLASH SALE TIMER:
+  → FlashSaleBanner.tsx → edit getTarget() function
+    Current offset: 1d + 23h + 47m + 16s from page load
+
+TO CHANGE FLASH SALE PROMO CODE:
+  → FlashSaleBanner.tsx → find "Use Code: FLASH30"
+
+TO CHANGE TOPBAR ANNOUNCEMENT TEXT:
+  → TopBar.tsx → find "Free Express Shipping on orders $500!"
+
+TO ADD MORE COUNTRIES:
+  → TopBar.tsx → add to countries[] array
+    Each: { name, code, flag: ReactNode (CSS-rendered flag spans) }
+
+TO CHANGE DEFAULT COUNTRY:
+  → TopBar.tsx → useState(2) → change 2 to the index of desired country
+
+TO ADD NEW LIQUID-FILL VARIANT:
+  → globals.css → add new .liquid-fill-[name]::before + :hover::before + :hover rules
+    following same pattern as existing ones
+
+TO ADD A NEW HOME SECTION:
+  → Create file: src/components/Home/YourSection.tsx
+  → Import and add in page.tsx after SpecialOffersTab
+
+================================================================================
+GLOBAL CSS ANIMATIONS SUMMARY (globals.css)
+================================================================================
+
+.logo-dot
+  → @keyframes dot-color-cycle
+  → Cycles: red→yellow→green→blue→purple→pink→cyan
+  → Duration: 4s linear infinite
+
+.liquid-fill          → ::before black bubble from bottom-center, hover expands
+.liquid-fill-circle   → ::before black bubble from dead center, hover expands
+.liquid-fill-white    → ::before white bubble from bottom-center (for dark bg)
+.liquid-fill-blue     → ::before white bubble from bottom-center (for blue bg)
+.liquid-fill-top      → ::before white bar from top, grows down (for vertical blue)
+
+All transitions use cubic-bezier(0.4, 0, 0.2, 1) — 0.8s duration
+.liquid-fill-blue is 0.5s (faster)
+All use z-index: -1 on ::before, isolation: isolate on container
+
+================================================================================
+END OF HANDOFF DOCUMENT
+================================================================================
