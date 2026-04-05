@@ -35,7 +35,7 @@ const slides = [
     cta: "Shop the MW08 Sport",
     ctaBg: "bg-white text-gray-900 hover:bg-gray-100",
     href: "/collections/sport",
-    image: "/hero/slide-3.webp",
+    image: "/hero/slide3-latest.png",
     bgColor: "#1C1C1C",
     outerBg: "linear-gradient(135deg, #0D0D0D 0%, #1C1C1C 50%, #2E0E0E 100%)",
   },

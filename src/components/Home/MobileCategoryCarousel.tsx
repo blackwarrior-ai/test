@@ -23,7 +23,7 @@ const bentoItems = [
   {
     id: 3,
     name: "Accessories",
-    image: "/products/accessories.png",
+    image: "/hero/accessories-new.png",
     className: "col-span-1 aspect-square",
     textClass: "hidden",
     titleClass: "hidden"
@@ -31,7 +31,7 @@ const bentoItems = [
   {
     id: 4,
     name: "MH40 Wireless",
-    image: "/products/mh40-wireless.png",
+    image: "/hero/mh40-landscape.png",
     className: "col-span-2 aspect-[2/1]",
     textClass: "hidden",
     titleClass: "hidden"
