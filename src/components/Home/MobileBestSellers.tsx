@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 
 const BEST_SELLERS = [
-  { id: 1, title: "Space Quest 1+2+3", tag: "NOW ON SALE", image: "/hero/slide-1.webp", oldPrice: "$9.99", newPrice: "$3.29", discount: "-67%" },
+  { id: 1, title: "Google Veo 3.1 HD", tag: "NOW ON SALE", image: "/hero/slide-1.webp", oldPrice: "$249.99", newPrice: "$34.99", discount: "-86%" },
   { id: 2, title: "Police Quest Collection", tag: "NOW ON SALE", image: "/hero/slide-2.webp", oldPrice: "$9.99", newPrice: "$6.49", discount: "-35%" },
   { id: 3, title: "Dragon Age™: Origins", tag: "NOW ON SALE", image: "/hero/slide-1.webp", oldPrice: "$19.99", newPrice: "$7.39", discount: "-63%" },
   { id: 4, title: "The Witcher 3: Wild Hunt", tag: "NOW ON SALE", image: "/hero/slide-2.webp", oldPrice: "$49.99", newPrice: "$12.49", discount: "-75%" },

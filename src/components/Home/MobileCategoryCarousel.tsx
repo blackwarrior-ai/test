@@ -15,26 +15,26 @@ const bentoItems = [
   {
     id: 2,
     name: "MW08 Sport",
-    image: "/products/mw08-sport.png",
+    image: "/hero/mw08-custom.png",
     className: "col-span-1 aspect-square",
-    textClass: "absolute inset-0 flex items-end justify-start pb-3 pl-3",
-    titleClass: "text-white text-[14px] sm:text-[16px] font-extrabold tracking-tight font-[var(--font-heading)]"
+    textClass: "hidden",
+    titleClass: "hidden"
   },
   {
     id: 3,
     name: "Accessories",
     image: "/products/accessories.png",
     className: "col-span-1 aspect-square",
-    textClass: "absolute inset-0 flex items-end justify-start pb-3 pl-3",
-    titleClass: "text-white text-[14px] sm:text-[16px] font-extrabold tracking-tight font-[var(--font-heading)]"
+    textClass: "hidden",
+    titleClass: "hidden"
   },
   {
     id: 4,
     name: "MH40 Wireless",
     image: "/products/mh40-wireless.png",
     className: "col-span-2 aspect-[2/1]",
-    textClass: "absolute inset-0 flex items-end justify-start pb-3 pl-4 sm:pb-4 sm:pl-5",
-    titleClass: "text-white text-[18px] sm:text-[22px] font-extrabold tracking-tight font-[var(--font-heading)] drop-shadow-md"
+    textClass: "hidden",
+    titleClass: "hidden"
   }
 ];
 
