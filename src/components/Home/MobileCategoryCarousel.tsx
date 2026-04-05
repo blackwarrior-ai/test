@@ -15,7 +15,7 @@ const bentoItems = [
   {
     id: 2,
     name: "MW08 Sport",
-    image: "/hero/mw08-new.png",
+    image: "/hero/mw08-latest.png",
     className: "col-span-1 aspect-square",
     textClass: "hidden",
     titleClass: "hidden"
