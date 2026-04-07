@@ -1,30 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const PHRASE = "Buy Tools at the Price of Candy     ·     DigiLink is Built to Serve You     ·     ";
 
 const backgrounds = [
-  "linear-gradient(to right, #B8A0D0, #EAB8C8)", // slide 1 — pastel lavender/pink
+  "linear-gradient(to right, #FD6246, #E02300)", // slide 1 — Light #EF2600 Red
   "linear-gradient(to right, #484947, #9F9F9D)", // slide 2 — grey/silver
-  "linear-gradient(to right, #0D0D0D, #2E0E0E)"  // slide 3 — dark charcoal/red
+  "linear-gradient(to right, #242424, #000000)"  // slide 3 — dark black shade
 ];
 
-export function MobileMarqueeBanner() {
+export function MobileMarqueeBanner({ current = 0 }: { current?: number }) {
   const content = PHRASE.repeat(6);
-  // Default to first slide
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    // Sync using exact index for identical absolute-layer fade implementation
-    const handleSlideChange = (e: Event) => {
-      const customEvent = e as CustomEvent<{ index: number }>;
-      setCurrent(customEvent.detail.index);
-    };
-
-    window.addEventListener('hero-slide-change', handleSlideChange);
-    return () => window.removeEventListener('hero-slide-change', handleSlideChange);
-  }, []);
 
   return (
     <>

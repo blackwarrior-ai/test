@@ -75,7 +75,7 @@ export function MobileBestSellers() {
             {pair.map((prod) => (
               <div 
                 key={prod.id} 
-                className="flex flex-col relative w-[calc(50vw-1.5rem)] sm:w-[160px] max-w-[160px] h-[200px] shrink-0 rounded-[8px] overflow-hidden bg-[#1a1a1a] shadow-sm border border-black"
+                className="flex flex-col relative w-[calc(50%-0.375rem)] sm:w-[160px] max-w-[160px] h-[200px] shrink-0 rounded-[8px] overflow-hidden bg-[#1a1a1a] shadow-sm border border-black"
               >
                 {/* Image Container */}
                 <div className="relative w-full h-[120px] shrink-0 bg-[#2d2d2d]">

@@ -3,6 +3,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Link from "next/link";
+import { MobileSmallCategoryCarousel } from "./MobileSmallCategoryCarousel";
+import { MobileMarqueeBanner } from "./MobileMarqueeBanner";
+
+const SLIDE_DURATIONS = [9000, 5000, 5000];
+const PROGRESS_CIRCUMFERENCE = 100.5;
 
 /* ── Slide data ── */
 const slides = [
@@ -14,8 +19,8 @@ const slides = [
     ctaBg: "bg-white text-gray-900 hover:bg-gray-100",
     href: "/collections/earphones",
     image: "/hero/slide-1.webp",
-    bgColor: "#C4ADDA",
-    outerBg: "linear-gradient(135deg, #B8A0D0 0%, #A8C4E0 30%, #D4A8CC 65%, #EAB8C8 100%)",
+    bgColor: "#F74A2C",
+    outerBg: "linear-gradient(135deg, #FD6246 0%, #F53613 50%, #E02300 100%)",
   },
   {
     id: 2,
@@ -36,44 +41,69 @@ const slides = [
     ctaBg: "bg-white text-gray-900 hover:bg-gray-100",
     href: "/collections/sport",
     image: "/hero/slide3-latest.png",
-    bgColor: "#1C1C1C",
-    outerBg: "linear-gradient(135deg, #0D0D0D 0%, #1C1C1C 50%, #2E0E0E 100%)",
+    bgColor: "#111111",
+    outerBg: "linear-gradient(135deg, #242424 0%, #111111 50%, #000000 100%)",
   },
 ];
 
 export function HeroBanner() {
   const [current, setCurrent] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [progressMs, setProgressMs] = useState(0);
+  const [videoRestartKey, setVideoRestartKey] = useState(0);
 
   const goTo = useCallback(
     (index: number) => {
-      if (isTransitioning) return;
-      setIsTransitioning(true);
+      if (index === current) return;
       setCurrent(index);
-      setTimeout(() => setIsTransitioning(false), 600);
     },
-    [isTransitioning]
+    [current]
   );
 
   // Sync active slide index via event for perfectly synced cross-fades
   useEffect(() => {
     document.documentElement.style.setProperty('--active-slide-bg', slides[current].bgColor);
     window.dispatchEvent(new CustomEvent('hero-slide-change', { detail: { index: current } }));
+
+    setProgressMs(0);
+    if (current === 0) {
+      setVideoRestartKey((prev) => prev + 1);
+    }
   }, [current]);
 
   const next = useCallback(() => {
-    goTo((current + 1) % slides.length);
-  }, [current, goTo]);
+    setCurrent((prev) => (prev + 1) % slides.length);
+  }, []);
 
   const prev = useCallback(() => {
-    goTo((current - 1 + slides.length) % slides.length);
-  }, [current, goTo]);
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+  }, []);
 
-  // Auto-play
   useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-  }, [next]);
+    const duration = SLIDE_DURATIONS[current];
+    let frameId = 0;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+
+      if (elapsed >= duration) {
+        setProgressMs(duration);
+        setCurrent((prev) => (prev + 1) % slides.length);
+        return;
+      }
+
+      setProgressMs(elapsed);
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [current]);
+
+  const activeProgress = Math.min(progressMs / SLIDE_DURATIONS[current], 1);
 
   return (
     <>
@@ -103,19 +133,33 @@ export function HeroBanner() {
             {slides.map((slide, i) => (
               <div
                 key={`inner-${slide.id}`}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out flex flex-col justify-center px-8 text-left ${
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out flex flex-col justify-center px-8 text-left overflow-hidden ${
                   i === current ? "opacity-100 z-10" : "opacity-0 z-0"
                 }`}
                 style={{ backgroundColor: slide.bgColor }}
               >
-                {/* Ad text image overlay — only on first (black) slide */}
-                {i === 0 && (
-                  <div className="absolute inset-0 z-10 flex items-center justify-center">
-                    <img
-                      src="/hero/ad_ky_text.png"
-                      alt="Ad Text"
-                      className="w-full h-full object-contain"
+                {/* Video Background for Slide 1 */}
+                {i === 0 && current === 0 && (
+                  <div className="absolute inset-0 z-0">
+                    <video 
+                      key={videoRestartKey}
+                      src="/hero/slide1.mp4" 
+                      className="w-full h-full object-cover" 
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
                     />
+                  </div>
+                )}
+
+                {/* Ad text image overlay — only on first (black) slide. 
+                    If you want to keep the text over the video, leave this. 
+                    If you don't want text, you can comment it out, but I'll make sure it's above the video. */}
+                {i === 0 && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                    {/* If you want to remove the text entirely, just delete this img tag */}
                   </div>
                 )}
                 {/* Image overlay — only on second slide */}
@@ -158,7 +202,7 @@ export function HeroBanner() {
                   >
                     <span className="relative z-10">{i + 1}</span>
                     
-                    {/* SVG Progress Border for the Active Slide (Runs for 5 seconds) */}
+                    {/* SVG Progress Border for the Active Slide */}
                     {isActive && (
                       <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 34 34">
                         <circle
@@ -168,9 +212,8 @@ export function HeroBanner() {
                           fill="none"
                           stroke="white"
                           strokeWidth="2"
-                          strokeDasharray="100.5"
-                          strokeDashoffset="100.5"
-                          style={{ animation: "progressSlide 5s linear forwards" }}
+                          strokeDasharray={PROGRESS_CIRCUMFERENCE}
+                          strokeDashoffset={PROGRESS_CIRCUMFERENCE * (1 - activeProgress)}
                         />
                       </svg>
                     )}
@@ -181,6 +224,12 @@ export function HeroBanner() {
           </div>
         </div>
       </section>
+
+      {/* Sync components embedded safely directly below mobile banner to enforce absolute variable sync */}
+      <div className="lg:hidden">
+        <MobileSmallCategoryCarousel />
+        <MobileMarqueeBanner current={current} />
+      </div>
 
       {/* ── DESKTOP HERO (boxed, inside container) ── */}
       <section className="hidden lg:block relative w-full">

@@ -23,7 +23,8 @@ const bentoItems = [
   {
     id: 3,
     name: "Accessories",
-    image: "/hero/accessories-new.png",
+    video: "/hero/ai.mp4",
+    image: "",
     className: "col-span-1 aspect-square",
     textClass: "hidden",
     titleClass: "hidden"

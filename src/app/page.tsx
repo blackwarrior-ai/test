@@ -9,8 +9,6 @@ import { ProductShowcase } from "@/components/Home/ProductShowcase";
 import { MarqueeBanner } from "@/components/Home/MarqueeBanner";
 import { SpecialOffersTab } from "@/components/Home/SpecialOffersTab";
 import { MobileCategoryCarousel } from "@/components/Home/MobileCategoryCarousel";
-import { MobileSmallCategoryCarousel } from "@/components/Home/MobileSmallCategoryCarousel";
-import { MobileMarqueeBanner } from "@/components/Home/MobileMarqueeBanner";
 import { MobileProductSlider } from "@/components/Home/MobileProductSlider";
 import { MobileBestSellers } from "@/components/Home/MobileBestSellers";
 
@@ -22,8 +20,6 @@ export default function Home() {
         {/* Mobile: Hero full-screen only, then Categories Carousel */}
         <div className="lg:hidden">
           <HeroBanner />
-          <MobileSmallCategoryCarousel />
-          <MobileMarqueeBanner />
           <MobileProductSlider />
           <MobileCategoryCarousel />
           <MobileBestSellers />
