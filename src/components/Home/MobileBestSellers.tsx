@@ -67,18 +67,18 @@ export function MobileBestSellers() {
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory gap-3 px-4 pb-4 [&::-webkit-scrollbar]:hidden" 
+        className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-4 [&::-webkit-scrollbar]:hidden" 
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {pairs.map((pair, index) => (
-          <div key={index} className="flex gap-3 shrink-0 snap-center justify-center w-[calc(100vw-2rem)]">
+          <div key={index} className="flex gap-4 shrink-0 snap-center justify-center w-[calc(100vw-2rem)]">
             {pair.map((prod) => (
               <div 
                 key={prod.id} 
-                className="flex flex-col relative w-[calc(50%-0.375rem)] sm:w-[160px] max-w-[160px] h-[200px] shrink-0 rounded-[8px] overflow-hidden bg-[#1a1a1a] shadow-sm border border-black"
+                className="flex flex-col relative w-[calc(50%-0.5rem)] sm:w-[160px] max-w-[160px] h-[256px] shrink-0 rounded-[6px] overflow-hidden bg-[#303030] shadow-sm"
               >
                 {/* Image Container */}
-                <div className="relative w-full h-[120px] shrink-0 bg-[#2d2d2d]">
+                <div className="relative w-full h-[140px] shrink-0 bg-[#1e1e1e]">
                   <img 
                     src={prod.image} 
                     alt={prod.title} 
@@ -98,23 +98,23 @@ export function MobileBestSellers() {
                 </div>
 
                 {/* Content Container */}
-                <div className="p-2 flex flex-col flex-1 justify-between bg-[#1a1a1a]">
-                  <h3 className="text-white text-[12px] font-bold leading-tight mb-1 line-clamp-2">
+                <div className="p-3.5 flex flex-col flex-1 justify-between bg-[#303030]">
+                  <h3 className="text-white text-[13.5px] sm:text-[14.5px] font-bold leading-snug mb-2 line-clamp-3">
                     {prod.title}
                   </h3>
 
                   {/* Price Details */}
-                  <div className="flex items-end justify-between mt-auto">
-                    <span className="bg-[#D65324] text-white text-[10px] font-bold px-1.5 py-[2px] rounded-[4px]">
+                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
+                    <span className="bg-[#cd9eff] text-black text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
                       {prod.discount}
                     </span>
-                    <div className="flex flex-col items-end leading-none">
+                    <div className="flex flex-col items-end leading-tight">
                       {prod.oldPrice && (
-                        <span className="text-gray-400 line-through text-[10px] mb-0.5">
+                        <span className="text-gray-400 line-through text-[11px]">
                           {prod.oldPrice}
                         </span>
                       )}
-                      <span className="text-white text-[13px] font-extrabold">
+                      <span className="text-white text-[14.5px] font-extrabold mt-[1px]">
                         {prod.newPrice}
                       </span>
                     </div>
