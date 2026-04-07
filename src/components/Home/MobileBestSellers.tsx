@@ -67,15 +67,15 @@ export function MobileBestSellers() {
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-4 [&::-webkit-scrollbar]:hidden" 
+        className="flex overflow-x-auto snap-x snap-mandatory gap-3 px-4 pb-4 [&::-webkit-scrollbar]:hidden w-full max-w-[500px] mx-auto" 
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {pairs.map((pair, index) => (
-          <div key={index} className="flex gap-4 shrink-0 snap-center justify-center w-[calc(100vw-2rem)]">
+          <div key={index} className="flex gap-3 shrink-0 snap-center justify-center w-[calc(100vw-2rem)] sm:w-[468px]">
             {pair.map((prod) => (
               <div 
                 key={prod.id} 
-                className="flex flex-col relative w-[calc(50%-0.5rem)] sm:w-[160px] max-w-[160px] h-[256px] shrink-0 rounded-[6px] overflow-hidden bg-[#303030] shadow-sm"
+                className="flex flex-col relative w-[calc(50%-0.375rem)] h-[256px] shrink-0 rounded-[6px] overflow-hidden bg-[#303030] shadow-sm"
               >
                 {/* Image Container */}
                 <div className="relative w-full h-[140px] shrink-0 bg-[#1e1e1e]">
