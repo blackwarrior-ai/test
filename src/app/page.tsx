@@ -11,7 +11,6 @@ import { SpecialOffersTab } from "@/components/Home/SpecialOffersTab";
 import { MobileCategoryCarousel } from "@/components/Home/MobileCategoryCarousel";
 import { MobileSmallCategoryCarousel } from "@/components/Home/MobileSmallCategoryCarousel";
 import { MobileMarqueeBanner } from "@/components/Home/MobileMarqueeBanner";
-import { MobileProductSlider } from "@/components/Home/MobileProductSlider";
 import { MobileBestSellers } from "@/components/Home/MobileBestSellers";
 import { MobileFlashSale } from "@/components/Home/MobileFlashSale";
 
