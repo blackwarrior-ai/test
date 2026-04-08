@@ -52,7 +52,7 @@ export function MobileBestSellers() {
   }
 
   return (
-    <section className="w-full lg:hidden bg-[#EBEBEB] py-[90px]">
+    <section className="w-full lg:hidden bg-[#EBEBEB] py-10">
       
       {/* Header */}
       <div className="px-4 mb-5">
