@@ -24,7 +24,7 @@ export function MobileMarqueeBanner({ current = 0 }: { current?: number }) {
         }
       `}</style>
 
-      <section className="relative w-full overflow-hidden py-8 select-none lg:hidden">
+      <section className="relative w-full overflow-hidden py-[48px] select-none lg:hidden">
         {backgrounds.map((bg, idx) => (
           <div
             key={idx}
