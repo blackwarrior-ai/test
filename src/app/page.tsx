@@ -9,10 +9,22 @@ import { ProductShowcase } from "@/components/Home/ProductShowcase";
 import { MarqueeBanner } from "@/components/Home/MarqueeBanner";
 import { SpecialOffersTab } from "@/components/Home/SpecialOffersTab";
 import { MobileCategoryCarousel } from "@/components/Home/MobileCategoryCarousel";
-import { MobileSmallCategoryCarousel } from "@/components/Home/MobileSmallCategoryCarousel";
-import { MobileMarqueeBanner } from "@/components/Home/MobileMarqueeBanner";
+
+import { MobileProductSlider } from "@/components/Home/MobileProductSlider";
 import { MobileBestSellers } from "@/components/Home/MobileBestSellers";
 import { MobileFlashSale } from "@/components/Home/MobileFlashSale";
+import { MobileCommunityPicks } from "@/components/Home/MobileCommunityPicks";
+import { MobileLimitedStock } from "@/components/Home/MobileLimitedStock";
+import {
+  TrendingProducts,
+  TrustBadges,
+  Testimonials,
+  NewsletterCTA,
+  BrandPromises,
+  MoreProducts,
+  FAQ,
+  FinalCTA,
+} from "@/components/Home/HomeSections";
 
 export default function Home() {
   return (
@@ -22,11 +34,12 @@ export default function Home() {
         {/* Mobile: Hero full-screen only, then Categories Carousel */}
         <div className="lg:hidden">
           <HeroBanner />
-          <MobileSmallCategoryCarousel />
-          <MobileMarqueeBanner />
+          <MobileProductSlider />
           <MobileCategoryCarousel />
           <MobileBestSellers />
           <MobileFlashSale />
+          <MobileCommunityPicks />
+          <MobileLimitedStock />
         </div>
 
         {/* Desktop: Category carousel under header, then hero */}
@@ -58,17 +71,29 @@ export default function Home() {
         {/* Special Offers Side Tab — desktop only */}
         <div className="hidden lg:block"><SpecialOffersTab /></div>
 
-        {/* Placeholder content below for scrolling — desktop only */}
-        <div className="hidden lg:block max-w-[1347px] mx-auto px-[16px] mt-8">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-lg"
-            >
-              Section {i + 5}
-            </div>
-          ))}
-        </div>
+        {/* Trending Products Section */}
+        <div className="hidden lg:block"><TrendingProducts /></div>
+
+        {/* Trust Badges */}
+        <div className="hidden lg:block"><TrustBadges /></div>
+
+        {/* More Products to Explore */}
+        <div className="hidden lg:block"><MoreProducts /></div>
+
+        {/* Newsletter / CTA */}
+        <div className="hidden lg:block"><NewsletterCTA /></div>
+
+        {/* Testimonials */}
+        <div className="hidden lg:block"><Testimonials /></div>
+
+        {/* Brand Stats */}
+        <div className="hidden lg:block"><BrandPromises /></div>
+
+        {/* FAQ */}
+        <div className="hidden lg:block"><FAQ /></div>
+
+        {/* Final CTA */}
+        <div className="hidden lg:block"><FinalCTA /></div>
       </main>
     </>
   );

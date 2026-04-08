@@ -3,52 +3,9 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Link from "next/link";
+import { products } from "@/data/products";
 
-/* ── Product data ── */
-const products = [
-  {
-    category: "CHAIRS",
-    name: "Cross Chair Heritage",
-    price: 589.0,
-    image: "/products/cross-chair.webp",
-    colors: ["#C4B9A8", "#3A3A3A"],
-  },
-  {
-    category: "SOFAS",
-    name: "Ray Sofa Basic",
-    price: 3289.0,
-    image: "/products/ray-sofa.webp",
-    colors: ["#B8BCA8", "#8BBCAC"],
-  },
-  {
-    category: "CHAIRS",
-    name: "Turn Chair Vivid",
-    price: 309.0,
-    image: "/products/turn-chair.webp",
-    colors: ["#8B2A2A", "#D4A843"],
-  },
-  {
-    category: "SOFA",
-    name: "Loop Sofa Armrest",
-    price: 3289.0,
-    image: "/products/loop-sofa.webp",
-    colors: ["#3A3A3A", "#A8C8D8"],
-  },
-  {
-    category: "FLOATING",
-    name: "Pixel Shelf",
-    price: 85.0,
-    image: "/products/pixel-shelf.webp",
-    colors: ["#A89080"],
-  },
-  {
-    category: "TABLES",
-    name: "Edge Table Round",
-    price: 429.0,
-    image: "/products/edge-table.webp",
-    colors: ["#D4C4A8", "#3A3A3A"],
-  },
-];
+const displayProducts = products.slice(0, 6);
 
 const tabs = ["New Arrivals", "Hot Items"] as const;
 
@@ -152,38 +109,41 @@ export function NewArrivals() {
           </div>
 
           {/* Product cards */}
-          {products.map((product) => (
-            <div key={product.name} className="shrink-0 w-[220px] lg:w-[240px] group">
+          {displayProducts.map((product) => (
+            <div key={product.slug} className="shrink-0 w-[220px] lg:w-[240px] group">
               {/* Image area */}
-              <Link href="#" className="block">
-                <div className="liquid-fill w-full aspect-[1/1.1] rounded-xl bg-[#F3F3F3] flex items-center justify-center relative transition-colors duration-200">
-                  {/* Placeholder — replace with next/image */}
-                  <div className="w-[60%] h-[60%] bg-[#E5E5E5] rounded-lg" />
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="liquid-fill w-full aspect-[1/1.1] rounded-xl bg-[#F3F3F3] flex items-center justify-center relative transition-colors duration-200 overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                    style={{ backgroundImage: `url('${product.image}')` }}
+                  />
+                  {product.badge && (
+                    <span className="absolute top-3 left-3 bg-[#1D349A] text-white text-[11px] font-bold px-2 py-1 rounded z-10">
+                      {product.badge}
+                    </span>
+                  )}
+                  <span className="absolute top-3 right-3 bg-red-600 text-white text-[11px] font-bold px-2 py-1 rounded z-10">
+                    {product.discount}
+                  </span>
                 </div>
               </Link>
 
               {/* Info */}
               <div className="mt-3">
-                <span className="text-[11px] font-semibold text-gray-400 tracking-wider uppercase">
+                <span className="text-[11px] font-semibold text-[#1D349A] tracking-wider uppercase">
                   {product.category}
                 </span>
                 <h4 className="text-[15px] font-semibold text-gray-900 mt-0.5 leading-snug">
-                  {product.name}
+                  {product.title}
                 </h4>
-                <p className="text-[15px] font-bold text-gray-900 mt-1">
-                  ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-                </p>
-
-                {/* Color swatches */}
-                <div className="flex items-center gap-1.5 mt-2">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color}
-                      className="w-5 h-5 rounded-full border border-gray-200 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition-all duration-150"
-                      style={{ backgroundColor: color }}
-                      aria-label={`Color ${color}`}
-                    />
-                  ))}
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-[15px] font-bold text-gray-900">
+                    ${product.newPrice.toFixed(2)}
+                  </p>
+                  <p className="text-[13px] text-gray-400 line-through">
+                    ${product.oldPrice.toFixed(2)}
+                  </p>
                 </div>
               </div>
             </div>

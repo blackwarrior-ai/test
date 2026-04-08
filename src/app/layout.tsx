@@ -14,8 +14,8 @@ export const logoFont = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "HYPER - Premium Furniture Store",
-  description: "Shop premium furniture for every room",
+  title: "DigiLink — Premium Digital Tools at Unbeatable Prices",
+  description: "Shop premium AI tools, design software, and digital subscriptions with instant delivery.",
 };
 
 export default function RootLayout({

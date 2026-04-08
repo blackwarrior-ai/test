@@ -143,14 +143,16 @@ export default function MobileHeader() {
             </div>
             <nav className="flex flex-col p-5 gap-6 text-[16px] font-semibold text-gray-900 overflow-y-auto">
               <Link href="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link href="/collections" onClick={() => setIsMenuOpen(false)}>Shop Collections</Link>
+              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>Shop All</Link>
+              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>AI Tools</Link>
+              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>Design & Creative</Link>
               <Link href="/about" onClick={() => setIsMenuOpen(false)}>About Us</Link>
               <Link href="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
             </nav>
             <div className="mt-auto p-5 border-t border-gray-100 bg-gray-50">
-              <button className="w-full bg-black text-white py-3.5 rounded-md font-bold text-[14px]">
+              <Link href="/account" onClick={() => setIsMenuOpen(false)} className="w-full bg-black text-white py-3.5 rounded-md font-bold text-[14px] block text-center">
                 Sign In / Register
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -174,7 +176,7 @@ export default function MobileHeader() {
           <div className="p-6 text-gray-500">
             <h3 className="text-[12px] font-bold tracking-widest uppercase mb-4 text-gray-400">Popular Searches</h3>
             <div className="flex flex-wrap gap-2 text-[14px]">
-              {['Earphones', 'Speakers', 'Soundbars'].map(term => (
+              {['ChatGPT', 'Canva Pro', 'NordVPN', 'Midjourney'].map(term => (
                 <span key={term} className="px-4 py-2 bg-gray-100 rounded-full cursor-pointer hover:bg-gray-200 text-gray-800 font-medium">
                   {term}
                 </span>

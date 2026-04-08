@@ -102,15 +102,63 @@ const countries: { name: string; code: string; flag: React.ReactNode }[] = [
   },
 ];
 
-/* ── Nav items ── */
-const navItems: { label: string; href: string; hasDropdown: boolean; isHighlighted?: boolean }[] = [
-  { label: "Shop By Categories", href: "/shop-by-categories", hasDropdown: true },
-  { label: "Shop By Room", href: "/shop-by-room", hasDropdown: true },
-  { label: "Tables & Desks", href: "/tables-desks", hasDropdown: true },
-  { label: "Chairs & Stools", href: "/chairs-stools", hasDropdown: true },
-  { label: "Pages", href: "/pages", hasDropdown: true },
-  { label: "Theme Features", href: "/theme-features", hasDropdown: true },
-  { label: "On Sale", href: "/on-sale", hasDropdown: false, isHighlighted: true },
+/* ── Nav items with dropdowns ── */
+const navItems: {
+  label: string;
+  href: string;
+  hasDropdown: boolean;
+  isHighlighted?: boolean;
+  children?: { label: string; href: string; desc?: string }[];
+}[] = [
+  {
+    label: "Shop All",
+    href: "/shop",
+    hasDropdown: true,
+    children: [
+      { label: "AI Assistants", href: "/shop?cat=ai-assistants", desc: "ChatGPT, Gemini, Grok & more" },
+      { label: "Design Tools", href: "/shop?cat=design-tools", desc: "Canva, Midjourney, Adobe" },
+      { label: "Coding", href: "/shop?cat=coding", desc: "GitHub Copilot & dev tools" },
+      { label: "Privacy & VPN", href: "/shop?cat=privacy", desc: "NordVPN, Surfshark & more" },
+      { label: "View All Products", href: "/shop" },
+    ],
+  },
+  {
+    label: "AI Tools",
+    href: "/shop?cat=ai-assistants",
+    hasDropdown: true,
+    children: [
+      { label: "ChatGPT Plus", href: "/products/chatgpt-private" },
+      { label: "Gemini Pro", href: "/products/gemini-pro" },
+      { label: "SuperGrok", href: "/products/supergrok" },
+      { label: "Perplexity Pro", href: "/products/perplexity-pro" },
+    ],
+  },
+  {
+    label: "Design & Creative",
+    href: "/shop?cat=design-tools",
+    hasDropdown: true,
+    children: [
+      { label: "Canva Pro", href: "/products/canva-pro" },
+      { label: "Midjourney Pro", href: "/products/midjourney-pro" },
+      { label: "Adobe Creative Cloud", href: "/products/adobe-creative-cloud" },
+    ],
+  },
+  {
+    label: "Productivity",
+    href: "/shop?cat=productivity",
+    hasDropdown: false,
+  },
+  {
+    label: "About",
+    href: "/about",
+    hasDropdown: true,
+    children: [
+      { label: "About Us", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  { label: "Contact", href: "/contact", hasDropdown: false },
+  { label: "On Sale", href: "/shop", hasDropdown: false, isHighlighted: true },
 ];
 
 /* ── Animated hamburger / cross icon ── */
@@ -148,6 +196,9 @@ export default function DesktopHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const [selected, setSelected] = useState(2); // Belgium default
+  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Measure heights
   useEffect(() => {
@@ -315,21 +366,27 @@ export default function DesktopHeader() {
               {/* Search Bar */}
               <div className="flex-1 flex items-center justify-start">
                 <div className="flex w-[600px] h-[48px] items-center rounded-full overflow-hidden bg-[#EDEDED] transition-colors duration-200">
-                  <button className="flex items-center gap-1.5 px-5 h-[48px] text-gray-700 whitespace-nowrap border-r border-gray-300 bg-[#E0E0E0] hover:bg-[#D5D5D5] transition-colors duration-200">
+                  <Link href="/shop" className="flex items-center gap-1.5 px-5 h-[48px] text-gray-700 whitespace-nowrap border-r border-gray-300 bg-[#E0E0E0] hover:bg-[#D5D5D5] transition-colors duration-200">
                     All Categories
                     <IoChevronDown className="w-3.5 h-3.5 text-gray-500" />
-                  </button>
-                  <input
-                    type="text"
-                    placeholder="What are you looking for?"
-                    className="flex-1 h-[48px] px-4 text-gray-700 placeholder-gray-400 outline-none bg-transparent"
-                  />
-                  <button
-                    className="flex items-center justify-center w-[46px] h-[48px] text-gray-600 hover:text-gray-900 transition-colors duration-200"
-                    aria-label="Search"
-                  >
-                    <HiOutlineSearch className="w-5 h-5" />
-                  </button>
+                  </Link>
+                  <form action="/search" method="get" className="flex-1 flex items-center">
+                    <input
+                      type="text"
+                      name="q"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="What are you looking for?"
+                      className="flex-1 h-[48px] px-4 text-gray-700 placeholder-gray-400 outline-none bg-transparent"
+                    />
+                    <button
+                      type="submit"
+                      className="flex items-center justify-center w-[46px] h-[48px] text-gray-600 hover:text-gray-900 transition-colors duration-200"
+                      aria-label="Search"
+                    >
+                      <HiOutlineSearch className="w-5 h-5" />
+                    </button>
+                  </form>
                 </div>
               </div>
 
@@ -352,6 +409,7 @@ export default function DesktopHeader() {
                 </Link>
 
                 <button
+                  onClick={() => window.location.href = '/cart'}
                   className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors duration-200"
                   aria-label="Cart"
                 >
@@ -373,20 +431,56 @@ export default function DesktopHeader() {
             <div className="max-w-[1347px] mx-auto px-[16px]">
               <nav className="flex items-center gap-1 h-[46px]">
                 {navItems.map((item, index) => (
-                  <Link
+                  <div
                     key={item.label}
-                    href={item.href}
-                    className={`flex items-center gap-1 ${index === 0 ? "pl-0" : "pl-3"} pr-3 xl:${index === 0 ? "pl-0" : "pl-4"} xl:pr-4 h-full font-semibold whitespace-nowrap transition-colors duration-200 ${
-                      item.isHighlighted
-                        ? "text-red-600 hover:text-red-700"
-                        : "text-gray-900 hover:text-[#1a1acd]"
-                    }`}
+                    className="relative h-full flex items-center"
+                    onMouseEnter={() => {
+                      if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
+                      if (item.hasDropdown && item.children) setActiveDropdown(index);
+                    }}
+                    onMouseLeave={() => {
+                      dropdownTimeout.current = setTimeout(() => setActiveDropdown(null), 150);
+                    }}
                   >
-                    {item.label}
-                    {item.hasDropdown && (
-                      <IoChevronDown className="w-3 h-3 ml-0.5 opacity-70" />
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-1 ${index === 0 ? "pl-0" : "pl-3"} pr-3 xl:${index === 0 ? "pl-0" : "pl-4"} xl:pr-4 h-full font-semibold whitespace-nowrap transition-colors duration-200 ${
+                        item.isHighlighted
+                          ? "text-red-600 hover:text-red-700"
+                          : "text-gray-900 hover:text-[#1D349A]"
+                      }`}
+                    >
+                      {item.label}
+                      {item.hasDropdown && (
+                        <IoChevronDown className={`w-3 h-3 ml-0.5 opacity-70 transition-transform duration-200 ${activeDropdown === index ? "rotate-180" : ""}`} />
+                      )}
+                    </Link>
+
+                    {/* Dropdown Panel */}
+                    {item.hasDropdown && item.children && activeDropdown === index && (
+                      <div className="absolute top-full left-0 pt-0 z-50">
+                        <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[220px] mt-0">
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.label}
+                              href={child.href}
+                              className="flex flex-col px-4 py-2.5 hover:bg-gray-50 transition-colors"
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              <span className="text-[14px] font-medium text-gray-900">
+                                {child.label}
+                              </span>
+                              {child.desc && (
+                                <span className="text-[12px] text-gray-400 mt-0.5">
+                                  {child.desc}
+                                </span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
                     )}
-                  </Link>
+                  </div>
                 ))}
               </nav>
             </div>

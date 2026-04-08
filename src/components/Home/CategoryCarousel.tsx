@@ -4,17 +4,17 @@ import { useRef, useState, useEffect } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 const categories = [
-  { label: "Spoke Sofa", image: "/categories/spoke-sofa.webp" },
-  { label: "Storage", image: "/categories/storage.webp", hasArrow: true },
-  { label: "Turn Chairs", image: "/categories/turn-chairs.webp" },
-  { label: "Chairs", image: "/categories/chairs.webp" },
-  { label: "Curve Coat", image: "/categories/curve-coat.webp" },
-  { label: "Bend Chairs", image: "/categories/bend-chairs.webp" },
-  { label: "Accessories", image: "/categories/accessories.webp" },
-  { label: "Tables", image: "/categories/tables.webp" },
-  { label: "Bar Chairs", image: "/categories/bar-chairs.webp" },
-  { label: "Lamps", image: "/categories/lamps.webp" },
-  { label: "Shelving", image: "/categories/shelving.webp" },
+  { label: "AI Assistants", emoji: "🤖" },
+  { label: "Design Tools", emoji: "🎨", hasArrow: true },
+  { label: "Coding", emoji: "💻" },
+  { label: "Productivity", emoji: "📋" },
+  { label: "Privacy & VPN", emoji: "🔒" },
+  { label: "Entertainment", emoji: "🎵" },
+  { label: "Voices", emoji: "🎙️" },
+  { label: "Graphics", emoji: "✨" },
+  { label: "Cloud Storage", emoji: "☁️" },
+  { label: "Education", emoji: "📚" },
+  { label: "All Products", emoji: "🛍️" },
 ];
 
 export function CategoryCarousel() {
@@ -146,7 +146,7 @@ export function CategoryCarousel() {
                 style={{ scrollSnapAlign: "start" }}
               >
                 <div className="liquid-fill-circle w-[90px] h-[90px] rounded-full bg-[#F5F5F5] flex items-center justify-center transition-colors duration-200">
-                  <div className="w-[56px] h-[56px] bg-[#E0E0E0] rounded-lg" />
+                  <span className="text-[36px]">{cat.emoji}</span>
                 </div>
                 <span className="text-[13px] font-semibold text-gray-900 whitespace-nowrap flex items-center gap-1">
                   {cat.label}

@@ -4,18 +4,18 @@ import Link from "next/link";
 import { IoChevronForward } from "react-icons/io5";
 
 const categories = [
-  { label: "Sale Items",    image: "/categories/sale.webp",         isSale: true },
-  { label: "Press Tables",  image: "/categories/press-tables.webp" },
-  { label: "Lighting",      image: "/categories/lighting.webp" },
-  { label: "Spoke Sofa",    image: "/categories/spoke-sofa.webp" },
-  { label: "Storage",       image: "/categories/storage.webp" },
-  { label: "Turn Chairs",   image: "/categories/turn-chairs.webp" },
-  { label: "Longe Chairs",  image: "/categories/longe-chairs.webp" },
-  { label: "Curve Coat",    image: "/categories/curve-coat.webp" },
-  { label: "Cross Tables",  image: "/categories/cross-tables.webp" },
-  { label: "Bend Chairs",   image: "/categories/bend-chairs.webp" },
-  { label: "Bar Chairs",    image: "/categories/bar-chairs.webp" },
-  { label: "Accessories",   image: "/categories/accessories.webp" },
+  { label: "Sale Items",      emoji: "🔥", isSale: true },
+  { label: "AI Assistants",   emoji: "🤖" },
+  { label: "Design Tools",    emoji: "🎨" },
+  { label: "Coding",          emoji: "💻" },
+  { label: "Productivity",    emoji: "📋" },
+  { label: "Privacy & VPN",   emoji: "🔒" },
+  { label: "Entertainment",   emoji: "🎵" },
+  { label: "Voices & Audio",  emoji: "🎙️" },
+  { label: "Graphics",        emoji: "✨" },
+  { label: "Cloud Storage",   emoji: "☁️" },
+  { label: "Education",       emoji: "📚" },
+  { label: "All Products",    emoji: "🛍️" },
 ];
 
 export function ShopByCategories() {
@@ -66,8 +66,7 @@ export function ShopByCategories() {
                         Sale
                       </span>
                     ) : (
-                      /* Placeholder — replace with <Image> when real images are ready */
-                      <div className="w-[68px] h-[68px] bg-[#DDDBD8] rounded" />
+                      <span className="text-[40px]">{cat.emoji}</span>
                     )}
                   </div>
 

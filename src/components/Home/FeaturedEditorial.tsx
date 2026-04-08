@@ -4,36 +4,36 @@ import Link from "next/link";
 
 const cards = [
   {
-    subtitle: "Danish Design",
-    title: "Material Natural",
-    bgColor: "#B5ADA6",
-    image: "/featured/material-natural.webp",
-    product: { name: "Grid Chair Frame", price: 309.0 },
-    href: "/products/grid-chair-frame",
+    subtitle: "AI Assistants",
+    title: "ChatGPT Plus",
+    bgColor: "#c87676",
+    image: "/hero/chatgpt-logo-dl.jpg",
+    product: { name: "Private Account", price: 9.99 },
+    href: "/products/chatgpt-private",
   },
   {
-    subtitle: "Cotton Collection",
-    title: "Authority Design",
-    bgColor: "#404D38",
-    image: "/featured/authority-design.webp",
-    product: { name: "Lunara Tea Towel", price: 27.0 },
-    href: "/products/lunara-tea-towel",
+    subtitle: "Design Tools",
+    title: "Canva Pro",
+    bgColor: "#9d83b0",
+    image: "/hero/canva-pro.jpg",
+    product: { name: "Full Access", price: 5.0 },
+    href: "/products/canva-pro",
   },
   {
-    subtitle: "Minimalism Style",
-    title: "Steels Lighting",
-    bgColor: "#7A2E1E",
-    image: "/featured/steels-lighting.webp",
-    product: { name: "Sculpt Table Lamp", price: 415.0 },
-    href: "/products/sculpt-table-lamp",
+    subtitle: "AI Research",
+    title: "Perplexity Pro",
+    bgColor: "#7a9e86",
+    image: "/hero/perplexity-pro.jpg",
+    product: { name: "Unlimited Searches", price: 11.99 },
+    href: "/products/perplexity-pro",
   },
   {
-    subtitle: "Danish Design",
-    title: "Nightstand",
-    bgColor: "#8C7D70",
-    image: "/featured/nightstand.webp",
-    product: { name: "Pixel Shelves", price: 85.0 },
-    href: "/products/pixel-shelves",
+    subtitle: "AI Assistants",
+    title: "SuperGrok",
+    bgColor: "#c49a6c",
+    image: "/hero/grok.jpg",
+    product: { name: "xAI Premium", price: 12.99 },
+    href: "/products/supergrok",
   },
 ];
 
@@ -48,6 +48,11 @@ export function FeaturedEditorial() {
               className="relative rounded-2xl overflow-hidden flex flex-col justify-end h-[320px] lg:h-[360px]"
               style={{ backgroundColor: card.bgColor }}
             >
+              {/* Background image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url('${card.image}')` }}
+              />
               {/* Gradient overlay — transparent top → dark bottom */}
               <div className="absolute inset-0 bg-gradient-to-b from-transparent from-35% to-black/65 z-[1]" />
 

@@ -2,20 +2,18 @@
 
 import React, { useRef, useState } from "react";
 
-const BEST_SELLERS = [
-  { id: 1, title: "ChatGPT Plus Private", tag: "BEST SELLER", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$9.99", discount: "-50%" },
-  { id: 2, title: "Gemini Pro", tag: "POPULAR", image: "/hero/gemini-pro.png", oldPrice: "$20.00", newPrice: "$10.90", discount: "-45%" },
-  { id: 3, title: "SuperGrok", tag: "NEW ARRIVAL", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.99", discount: "-57%" },
-  { id: 4, title: "Canva Pro", tag: "BEST VALUE", image: "/hero/canva-pro.jpg", oldPrice: "$15.00", newPrice: "$5.00", discount: "-67%" },
-  { id: 5, title: "Perplexity Pro", tag: "TRENDING", image: "/hero/perplexity-pro.jpg", oldPrice: "$20.00", newPrice: "$11.99", discount: "-40%" },
-  { id: 6, title: "Midjourney Pro", tag: "CREATIVE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$30.00", newPrice: "$19.50", discount: "-35%" },
-  { id: 7, title: "GitHub Copilot Pro", tag: "DEVELOPER", image: "/hero/grok.jpg", oldPrice: "$19.00", newPrice: "$8.55", discount: "-55%" },
-  { id: 8, title: "NordVPN Premium", tag: "SECURITY", image: "/hero/canva-pro.jpg", oldPrice: "$12.00", newPrice: "$3.60", discount: "-70%" },
-  { id: 9, title: "Spotify Premium", tag: "MUSIC", image: "/hero/perplexity-pro.jpg", oldPrice: "$10.00", newPrice: "$4.00", discount: "-60%" },
-  { id: 10, title: "ElevenLabs Pro", tag: "AI VOICE", image: "/hero/gemini-pro.png", oldPrice: "$22.00", newPrice: "$12.76", discount: "-42%" }
+const LIMITED_STOCK = [
+  { id: 1, title: "Claude Pro Annual", tag: "ALMOST GONE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$8.99", discount: "-55%" },
+  { id: 2, title: "Suno AI Music Pro", tag: "LOW STOCK", image: "/hero/gemini-pro.png", oldPrice: "$25.00", newPrice: "$12.49", discount: "-50%" },
+  { id: 3, title: "Runway ML Pro", tag: "LAST FEW", image: "/hero/grok.jpg", oldPrice: "$35.00", newPrice: "$15.99", discount: "-54%" },
+  { id: 4, title: "Pika Labs Premium", tag: "HURRY UP", image: "/hero/canva-pro.jpg", oldPrice: "$18.00", newPrice: "$7.20", discount: "-60%" },
+  { id: 5, title: "Leonardo AI Pro", tag: "SELLING FAST", image: "/hero/perplexity-pro.jpg", oldPrice: "$24.00", newPrice: "$9.60", discount: "-60%" },
+  { id: 6, title: "Jasper AI Business", tag: "LIMITED", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$49.00", newPrice: "$19.60", discount: "-60%" },
+  { id: 7, title: "Descript Pro Plan", tag: "FEW LEFT", image: "/hero/gemini-pro.png", oldPrice: "$28.00", newPrice: "$11.20", discount: "-60%" },
+  { id: 8, title: "Luma Dream Machine", tag: "RARE DEAL", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.00", discount: "-60%" },
 ];
 
-export function MobileBestSellers() {
+export function MobileLimitedStock() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -24,31 +22,23 @@ export function MobileBestSellers() {
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     const maxScroll = scrollWidth - clientWidth;
     if (maxScroll <= 0) return;
-    
-    // Calculate progress between 0 and 1
     const scrollProgress = scrollLeft / maxScroll;
-    
-    // We have 5 pagination lines. A 0-based index from 0 to 4.
-    const index = Math.round(scrollProgress * 4);
+    const index = Math.round(scrollProgress * 3);
     setActiveIndex(index);
   };
 
   const scrollToIndex = (index: number) => {
     if (!scrollRef.current) return;
     const { scrollWidth, clientWidth } = scrollRef.current;
-    // Calculate the maximum possible scroll left value
     const maxScroll = scrollWidth - clientWidth;
     if (maxScroll <= 0) return;
-    
-    // Reverse calculate the scroll target for this specific index (0 to 4)
-    const targetScroll = (maxScroll / 4) * index;
+    const targetScroll = (maxScroll / 3) * index;
     scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
   };
 
-  // Group into pairs (2 items each) so they scroll and snap together
   const pairs = [];
-  for (let i = 0; i < BEST_SELLERS.length; i += 2) {
-    pairs.push(BEST_SELLERS.slice(i, i + 2));
+  for (let i = 0; i < LIMITED_STOCK.length; i += 2) {
+    pairs.push(LIMITED_STOCK.slice(i, i + 2));
   }
 
   return (
@@ -57,9 +47,8 @@ export function MobileBestSellers() {
       {/* Header */}
       <div className="px-4 mb-5">
         <h2 className="text-gray-900 text-[22px] sm:text-[24px] font-extrabold font-[var(--font-heading)] leading-tight">
-          Best sellers
+          Limited in the Stock
         </h2>
-        {/* Subtle separating line */}
         <div className="w-full h-px bg-black/10 mt-4" />
       </div>
 
@@ -87,7 +76,6 @@ export function MobileBestSellers() {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
-                  {/* Product Tag */}
                   {prod.tag && (
                     <div className="absolute top-1.5 left-1.5 bg-gradient-to-r from-[#FACC15] to-[#F59E0B] px-1.5 py-0.5 rounded-[2px] border border-[#F59E0B]/50 shadow-sm">
                       <span className="text-black text-[8px] font-extrabold tracking-wide uppercase">
@@ -103,7 +91,6 @@ export function MobileBestSellers() {
                     {prod.title}
                   </h3>
 
-                  {/* Price Details */}
                   <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
                     <span className="bg-[#cd9eff] text-black text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
                       {prod.discount}
@@ -126,9 +113,9 @@ export function MobileBestSellers() {
         ))}
       </div>
       
-      {/* Pagination indicators (calculated dynamically based on scroll) */}
+      {/* Pagination indicators */}
       <div className="flex justify-center items-center gap-2 mt-2">
-        {[0, 1, 2, 3, 4].map((index) => (
+        {[0, 1, 2, 3].map((index) => (
           <button 
             key={index}
             onClick={() => scrollToIndex(index)}

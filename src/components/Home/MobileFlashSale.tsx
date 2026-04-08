@@ -30,40 +30,60 @@ export function MobileFlashSale() {
 
   return (
     <section className="px-4 pb-[36px] lg:hidden bg-[#EBEBEB]">
-      <div className="w-full rounded-[10px] bg-[#F4F691] px-4 py-8 flex flex-col items-center justify-center text-center">
-        
-        {/* Left label */}
-        <h3 className="text-[18px] font-bold text-gray-900 tracking-tight mb-2">
-          Flash Sale now on!
-        </h3>
+
+      {/* Discount Banner Card */}
+      <div className="w-full rounded-[10px] overflow-hidden mb-3 relative h-[130px]">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/hero/slide-1.webp')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+
+        {/* Content */}
+        <div className="relative z-10 h-full flex items-center justify-end pr-6">
+          <div className="text-right">
+            <h3 className="text-white text-[26px] font-extrabold leading-tight tracking-tight">
+              Discount 50%
+            </h3>
+            <p className="text-white/60 text-[13px] font-medium mt-1">
+              learn more...
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Countdown + Code Box */}
+      <div className="w-full rounded-[10px] bg-[#F4F691] px-4 py-6 flex flex-col items-center justify-center text-center">
 
         {/* Countdown */}
-        <div className="flex items-center text-[#0A0A0A] mt-2 mb-4">
-          <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
-            {pad(time.d)}
-          </span>
-          <span className="text-[20px] font-medium leading-none mx-[6px] relative -top-[2px]">:</span>
-          <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
-            {pad(time.h)}
-          </span>
-          <span className="text-[20px] font-medium leading-none mx-[6px] relative -top-[2px]">:</span>
-          <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
-            {pad(time.m)}
-          </span>
-          <span className="text-[20px] font-medium leading-none mx-[6px] relative -top-[2px]">:</span>
-          <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
-            {pad(time.s)}
-          </span>
+        <div className="flex items-center text-[#0A0A0A] mb-4">
+          {[
+            { val: pad(time.d), label: "Days" },
+            { val: pad(time.h), label: "Hrs" },
+            { val: pad(time.m), label: "Min" },
+            { val: pad(time.s), label: "Sec" },
+          ].map((unit, i) => (
+            <div key={unit.label} className="flex items-center">
+              {i > 0 && (
+                <span className="text-[20px] font-bold leading-none mx-[6px] relative -top-[4px] text-[#0A0A0A]/40">
+                  :
+                </span>
+              )}
+              <div className="flex flex-col items-center">
+                <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
+                  {unit.val}
+                </span>
+                <span className="text-[10px] font-semibold text-[#0A0A0A]/50 uppercase tracking-wider mt-1">
+                  {unit.label}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Right text */}
-        <p className="text-[17px] text-gray-900 leading-[1.3] font-medium mb-6">
-          Save on modern table office,<br />
-          best sellers + more
-        </p>
-
         {/* CTA */}
-        <button className="liquid-fill-white w-[90%] max-w-[280px] h-[54px] flex items-center justify-center bg-[#0A0A0A] text-white text-[16px] font-bold rounded-full whitespace-nowrap overflow-hidden z-10 transition-colors">
+        <button className="liquid-fill-white w-[90%] max-w-[280px] h-[50px] flex items-center justify-center bg-[#0A0A0A] text-white text-[15px] font-bold rounded-full whitespace-nowrap overflow-hidden z-10 transition-colors">
           Use Code: FLASH30
         </button>
 
