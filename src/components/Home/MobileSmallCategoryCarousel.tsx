@@ -37,7 +37,7 @@ const carouselItems = [
 
 export function MobileSmallCategoryCarousel() {
   return (
-    <section className="w-full bg-[#EBEBEB] pt-12 pb-14 px-4 lg:hidden">
+    <section className="w-full bg-[#EBEBEB] pt-[108px] pb-[126px] px-4 lg:hidden">
       <div className="flex overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {carouselItems.map((item) => (
           <Link

@@ -41,7 +41,7 @@ const bentoItems = [
 
 export function MobileCategoryCarousel() {
   return (
-    <section className="w-full lg:hidden px-4 pt-8 pb-12 bg-gradient-to-r from-[#D65324] to-[#8B3310]">
+    <section className="w-full lg:hidden px-4 pt-[72px] pb-[108px] bg-gradient-to-r from-[#D65324] to-[#8B3310]">
       <div className="grid grid-cols-2 gap-3 w-full max-w-[500px] mx-auto">
         {bentoItems.map((item) => (
           <Link

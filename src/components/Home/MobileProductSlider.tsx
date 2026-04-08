@@ -63,7 +63,7 @@ const MOCK_PRODUCTS = [
 
 export function MobileProductSlider() {
   return (
-    <section className="w-full pt-12 pb-6 lg:hidden bg-[#EBEBEB]">
+    <section className="w-full pt-[108px] pb-[54px] lg:hidden bg-[#EBEBEB]">
       {/* Horizontal Slider Area */}
       <div 
         className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-4 [&::-webkit-scrollbar]:hidden" 
