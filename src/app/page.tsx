@@ -25,7 +25,6 @@ export default function Home() {
           <HeroBanner />
           <MobileSmallCategoryCarousel />
           <MobileMarqueeBanner />
-          <MobileProductSlider />
           <MobileCategoryCarousel />
           <MobileBestSellers />
           <MobileFlashSale />
