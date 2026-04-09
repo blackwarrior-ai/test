@@ -200,6 +200,13 @@ export default function MobileHeader() {
               ))}
             </nav>
 
+            {/* Sign In / Sign Up */}
+            <div className="mx-6 mb-4">
+              <Link href="/signin" onClick={closeMenu} className="block w-full bg-gray-900 text-white text-center py-3 rounded-[6px] text-[14px] font-semibold font-[var(--font-barlow)]">
+                Sign In / Sign Up
+              </Link>
+            </div>
+
             {/* Bottom: Social + Account */}
             <div className="px-6 pt-4 pb-6 border-t border-gray-100 mt-auto font-[var(--font-barlow)]">
               {/* Social Icons */}
@@ -222,15 +229,12 @@ export default function MobileHeader() {
                 </a>
               </div>
 
-              {/* Currency + Account */}
+              {/* Currency */}
               <div className="flex items-center gap-6 text-[14px]">
                 <button onClick={() => setIsCurrencyOpen(true)} className="flex items-center gap-1.5 text-gray-900 font-medium">
                   USD $
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <Link href="/account" onClick={closeMenu} className="text-gray-900 font-medium">
-                  Account
-                </Link>
               </div>
             </div>
 
