@@ -42,7 +42,7 @@ export function MobileCommunityPicks() {
   }
 
   return (
-    <section className="w-full lg:hidden bg-[#EBEBEB] py-[60px]">
+    <section className="w-full lg:hidden bg-[#EBEBEB] py-[30px]">
       
       {/* Header */}
       <div className="px-4 mb-5">
