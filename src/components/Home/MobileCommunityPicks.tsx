@@ -92,7 +92,7 @@ export function MobileCommunityPicks() {
                   </h3>
 
                   <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
-                    <span className="bg-[#cd9eff] text-black text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
+                    <span className="bg-white/95 text-gray-900 shadow-sm text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
                       {prod.discount}
                     </span>
                     <div className="flex flex-col items-end leading-tight">

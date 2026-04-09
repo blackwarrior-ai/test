@@ -36,21 +36,8 @@ export function MobileFlashSale() {
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero/slide-1.webp')" }}
+          style={{ backgroundImage: "url('/hero/flash-sale-bg.png')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-
-        {/* Content */}
-        <div className="relative z-10 h-full flex items-center justify-end pr-6">
-          <div className="text-right">
-            <h3 className="text-white text-[26px] font-extrabold leading-tight tracking-tight">
-              Discount 50%
-            </h3>
-            <p className="text-white/60 text-[13px] font-medium mt-1">
-              learn more...
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Countdown + Code Box */}
