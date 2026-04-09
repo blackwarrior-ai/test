@@ -16,6 +16,8 @@ import { MobileFlashSale } from "@/components/Home/MobileFlashSale";
 import { MobileCommunityPicks } from "@/components/Home/MobileCommunityPicks";
 import { MobileLimitedStock } from "@/components/Home/MobileLimitedStock";
 import { MobileCategoryBanners } from "@/components/Home/MobileCategoryBanners";
+import { MobileShopByCategories } from "@/components/Home/MobileShopByCategories";
+import { MobileInspiredSection } from "@/components/Home/MobileInspiredSection";
 import {
   TrendingProducts,
   TrustBadges,
@@ -37,11 +39,13 @@ export default function Home() {
           <HeroBanner />
           <MobileProductSlider />
           <MobileCategoryCarousel />
+          <MobileShopByCategories />
           <MobileBestSellers />
           <MobileFlashSale />
           <MobileCommunityPicks />
           <MobileLimitedStock />
           <MobileCategoryBanners />
+          <MobileInspiredSection />
         </div>
 
         {/* Desktop: Category carousel under header, then hero */}
