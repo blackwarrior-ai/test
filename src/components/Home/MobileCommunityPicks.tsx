@@ -3,14 +3,14 @@
 import React, { useRef, useState } from "react";
 
 const COMMUNITY_PICKS = [
-  { id: 1, title: "Notion AI Workspace", tag: "COMMUNITY PICK", image: "/hero/gemini-pro.png", oldPrice: "$10.00", newPrice: "$4.99", discount: "-50%" },
-  { id: 2, title: "Adobe Creative Cloud", tag: "TOP RATED", image: "/hero/canva-pro.jpg", oldPrice: "$55.00", newPrice: "$24.99", discount: "-55%" },
-  { id: 3, title: "Spotify Premium Family", tag: "MOST LOVED", image: "/hero/perplexity-pro.jpg", oldPrice: "$16.00", newPrice: "$6.40", discount: "-60%" },
-  { id: 4, title: "ElevenLabs Pro Voice", tag: "TRENDING", image: "/hero/grok.jpg", oldPrice: "$22.00", newPrice: "$11.00", discount: "-50%" },
-  { id: 5, title: "NordVPN 2-Year Plan", tag: "BEST VALUE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$12.00", newPrice: "$3.00", discount: "-75%" },
-  { id: 6, title: "Grammarly Premium", tag: "ESSENTIAL", image: "/hero/gemini-pro.png", oldPrice: "$30.00", newPrice: "$14.99", discount: "-50%" },
-  { id: 7, title: "Coursera Plus Annual", tag: "LEARNING", image: "/hero/canva-pro.jpg", oldPrice: "$59.00", newPrice: "$23.60", discount: "-60%" },
-  { id: 8, title: "Figma Professional", tag: "DESIGNER FAV", image: "/hero/perplexity-pro.jpg", oldPrice: "$15.00", newPrice: "$6.75", discount: "-55%" },
+  { id: 1, title: "Notion AI Workspace", tag: "COMMUNITY PICK", image: "/hero/gemini-pro.png", oldPrice: "$10.00", newPrice: "$4.99", discount: "-50%", bgColor: "bg-[#6384a3]" },
+  { id: 2, title: "Adobe Creative Cloud", tag: "TOP RATED", image: "/hero/canva-pro.jpg", oldPrice: "$55.00", newPrice: "$24.99", discount: "-55%", bgColor: "bg-[#6384a3]" },
+  { id: 3, title: "Spotify Premium Family", tag: "MOST LOVED", image: "/hero/perplexity-pro.jpg", oldPrice: "$16.00", newPrice: "$6.40", discount: "-60%", bgColor: "bg-[#6384a3]" },
+  { id: 4, title: "ElevenLabs Pro Voice", tag: "TRENDING", image: "/hero/grok.jpg", oldPrice: "$22.00", newPrice: "$11.00", discount: "-50%", bgColor: "bg-[#6384a3]" },
+  { id: 5, title: "NordVPN 2-Year Plan", tag: "BEST VALUE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$12.00", newPrice: "$3.00", discount: "-75%", bgColor: "bg-[#6384a3]" },
+  { id: 6, title: "Grammarly Premium", tag: "ESSENTIAL", image: "/hero/gemini-pro.png", oldPrice: "$30.00", newPrice: "$14.99", discount: "-50%", bgColor: "bg-[#6384a3]" },
+  { id: 7, title: "Coursera Plus Annual", tag: "LEARNING", image: "/hero/canva-pro.jpg", oldPrice: "$59.00", newPrice: "$23.60", discount: "-60%", bgColor: "bg-[#6384a3]" },
+  { id: 8, title: "Figma Professional", tag: "DESIGNER FAV", image: "/hero/perplexity-pro.jpg", oldPrice: "$15.00", newPrice: "$6.75", discount: "-55%", bgColor: "bg-[#6384a3]" },
 ];
 
 export function MobileCommunityPicks() {
@@ -86,7 +86,7 @@ export function MobileCommunityPicks() {
                 </div>
 
                 {/* Content Container */}
-                <div className="p-3.5 flex flex-col flex-1 justify-between bg-[#303030]">
+                <div className={`p-3.5 flex flex-col flex-1 justify-between ${prod.bgColor}`}>
                   <h3 className="text-white text-[13.5px] sm:text-[14.5px] font-bold leading-snug mb-2 line-clamp-3">
                     {prod.title}
                   </h3>

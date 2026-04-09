@@ -3,14 +3,14 @@
 import React, { useRef, useState } from "react";
 
 const LIMITED_STOCK = [
-  { id: 1, title: "Claude Pro Annual", tag: "ALMOST GONE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$8.99", discount: "-55%" },
-  { id: 2, title: "Suno AI Music Pro", tag: "LOW STOCK", image: "/hero/gemini-pro.png", oldPrice: "$25.00", newPrice: "$12.49", discount: "-50%" },
-  { id: 3, title: "Runway ML Pro", tag: "LAST FEW", image: "/hero/grok.jpg", oldPrice: "$35.00", newPrice: "$15.99", discount: "-54%" },
-  { id: 4, title: "Pika Labs Premium", tag: "HURRY UP", image: "/hero/canva-pro.jpg", oldPrice: "$18.00", newPrice: "$7.20", discount: "-60%" },
-  { id: 5, title: "Leonardo AI Pro", tag: "SELLING FAST", image: "/hero/perplexity-pro.jpg", oldPrice: "$24.00", newPrice: "$9.60", discount: "-60%" },
-  { id: 6, title: "Jasper AI Business", tag: "LIMITED", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$49.00", newPrice: "$19.60", discount: "-60%" },
-  { id: 7, title: "Descript Pro Plan", tag: "FEW LEFT", image: "/hero/gemini-pro.png", oldPrice: "$28.00", newPrice: "$11.20", discount: "-60%" },
-  { id: 8, title: "Luma Dream Machine", tag: "RARE DEAL", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.00", discount: "-60%" },
+  { id: 1, title: "Claude Pro Annual", tag: "ALMOST GONE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$8.99", discount: "-55%", bgColor: "bg-[#9d83b0]" },
+  { id: 2, title: "Suno AI Music Pro", tag: "LOW STOCK", image: "/hero/gemini-pro.png", oldPrice: "$25.00", newPrice: "$12.49", discount: "-50%", bgColor: "bg-[#9d83b0]" },
+  { id: 3, title: "Runway ML Pro", tag: "LAST FEW", image: "/hero/grok.jpg", oldPrice: "$35.00", newPrice: "$15.99", discount: "-54%", bgColor: "bg-[#9d83b0]" },
+  { id: 4, title: "Pika Labs Premium", tag: "HURRY UP", image: "/hero/canva-pro.jpg", oldPrice: "$18.00", newPrice: "$7.20", discount: "-60%", bgColor: "bg-[#9d83b0]" },
+  { id: 5, title: "Leonardo AI Pro", tag: "SELLING FAST", image: "/hero/perplexity-pro.jpg", oldPrice: "$24.00", newPrice: "$9.60", discount: "-60%", bgColor: "bg-[#9d83b0]" },
+  { id: 6, title: "Jasper AI Business", tag: "LIMITED", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$49.00", newPrice: "$19.60", discount: "-60%", bgColor: "bg-[#9d83b0]" },
+  { id: 7, title: "Descript Pro Plan", tag: "FEW LEFT", image: "/hero/gemini-pro.png", oldPrice: "$28.00", newPrice: "$11.20", discount: "-60%", bgColor: "bg-[#9d83b0]" },
+  { id: 8, title: "Luma Dream Machine", tag: "RARE DEAL", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.00", discount: "-60%", bgColor: "bg-[#9d83b0]" },
 ];
 
 export function MobileLimitedStock() {
@@ -86,7 +86,7 @@ export function MobileLimitedStock() {
                 </div>
 
                 {/* Content Container */}
-                <div className="p-3.5 flex flex-col flex-1 justify-between bg-[#303030]">
+                <div className={`p-3.5 flex flex-col flex-1 justify-between ${prod.bgColor}`}>
                   <h3 className="text-white text-[13.5px] sm:text-[14.5px] font-bold leading-snug mb-2 line-clamp-3">
                     {prod.title}
                   </h3>
