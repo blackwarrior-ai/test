@@ -41,10 +41,10 @@ export function MobileFlashSale() {
       </div>
 
       {/* Countdown + Code Box */}
-      <div className="w-full rounded-[10px] bg-[#F4F691] px-4 py-6 flex flex-col items-center justify-center text-center">
+      <div className="w-full rounded-[10px] bg-[#1D349A] px-4 py-6 flex flex-col items-center justify-center text-center">
 
         {/* Countdown */}
-        <div className="flex items-center text-[#0A0A0A] mb-4">
+        <div className="flex items-center text-white mb-4">
           {[
             { val: pad(time.d), label: "Days" },
             { val: pad(time.h), label: "Hrs" },
@@ -53,7 +53,7 @@ export function MobileFlashSale() {
           ].map((unit, i) => (
             <div key={unit.label} className="flex items-center">
               {i > 0 && (
-                <span className="text-[20px] font-bold leading-none mx-[6px] relative -top-[4px] text-[#0A0A0A]/40">
+                <span className="text-[20px] font-bold leading-none mx-[6px] relative -top-[4px] text-white/40">
                   :
                 </span>
               )}
@@ -61,7 +61,7 @@ export function MobileFlashSale() {
                 <span className="text-[38px] font-black leading-none tabular-nums tracking-tight">
                   {unit.val}
                 </span>
-                <span className="text-[10px] font-semibold text-[#0A0A0A]/50 uppercase tracking-wider mt-1">
+                <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider mt-1">
                   {unit.label}
                 </span>
               </div>
@@ -70,7 +70,7 @@ export function MobileFlashSale() {
         </div>
 
         {/* CTA */}
-        <button className="liquid-fill-white w-[90%] max-w-[280px] h-[50px] flex items-center justify-center bg-[#0A0A0A] text-white text-[15px] font-bold rounded-full whitespace-nowrap overflow-hidden z-10 transition-colors">
+        <button className="liquid-fill-white w-[90%] max-w-[280px] h-[50px] flex items-center justify-center bg-white text-[#1D349A] text-[15px] font-bold rounded-full whitespace-nowrap overflow-hidden z-10 transition-colors">
           Use Code: FLASH30
         </button>
 

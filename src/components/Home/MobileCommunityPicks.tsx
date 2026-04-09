@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import { IoBagOutline } from "react-icons/io5";
 
 const COMMUNITY_PICKS = [
-  { id: 1, title: "Notion AI Workspace", tag: "COMMUNITY PICK", image: "/hero/gemini-pro.png", oldPrice: "$10.00", newPrice: "$4.99", discount: "-50%", bgColor: "bg-[#6384a3]" },
-  { id: 2, title: "Adobe Creative Cloud", tag: "TOP RATED", image: "/hero/canva-pro.jpg", oldPrice: "$55.00", newPrice: "$24.99", discount: "-55%", bgColor: "bg-[#6384a3]" },
-  { id: 3, title: "Spotify Premium Family", tag: "MOST LOVED", image: "/hero/perplexity-pro.jpg", oldPrice: "$16.00", newPrice: "$6.40", discount: "-60%", bgColor: "bg-[#6384a3]" },
-  { id: 4, title: "ElevenLabs Pro Voice", tag: "TRENDING", image: "/hero/grok.jpg", oldPrice: "$22.00", newPrice: "$11.00", discount: "-50%", bgColor: "bg-[#6384a3]" },
-  { id: 5, title: "NordVPN 2-Year Plan", tag: "BEST VALUE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$12.00", newPrice: "$3.00", discount: "-75%", bgColor: "bg-[#6384a3]" },
-  { id: 6, title: "Grammarly Premium", tag: "ESSENTIAL", image: "/hero/gemini-pro.png", oldPrice: "$30.00", newPrice: "$14.99", discount: "-50%", bgColor: "bg-[#6384a3]" },
-  { id: 7, title: "Coursera Plus Annual", tag: "LEARNING", image: "/hero/canva-pro.jpg", oldPrice: "$59.00", newPrice: "$23.60", discount: "-60%", bgColor: "bg-[#6384a3]" },
-  { id: 8, title: "Figma Professional", tag: "DESIGNER FAV", image: "/hero/perplexity-pro.jpg", oldPrice: "$15.00", newPrice: "$6.75", discount: "-55%", bgColor: "bg-[#6384a3]" },
+  { id: 1, title: "Notion AI Workspace", category: "AI TOOLS", tag: "Sale", image: "/hero/gemini-pro.png", oldPrice: "$10.00", newPrice: "$4.99" },
+  { id: 2, title: "Adobe Creative Cloud", category: "DESIGN", tag: "Sale", image: "/hero/canva-pro.jpg", oldPrice: "$55.00", newPrice: "$24.99" },
+  { id: 3, title: "Spotify Premium Family", category: "STREAMING", tag: "Sale", image: "/hero/perplexity-pro.jpg", oldPrice: "$16.00", newPrice: "$6.40" },
+  { id: 4, title: "ElevenLabs Pro Voice", category: "AI VOICE", tag: "Sale", image: "/hero/grok.jpg", oldPrice: "$22.00", newPrice: "$11.00" },
+  { id: 5, title: "NordVPN 2-Year Plan", category: "SECURITY", tag: "Sale", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$12.00", newPrice: "$3.00" },
+  { id: 6, title: "Grammarly Premium", category: "PRODUCTIVITY", tag: "Sale", image: "/hero/gemini-pro.png", oldPrice: "$30.00", newPrice: "$14.99" },
+  { id: 7, title: "Coursera Plus Annual", category: "LEARNING", tag: "Sale", image: "/hero/canva-pro.jpg", oldPrice: "$59.00", newPrice: "$23.60" },
+  { id: 8, title: "Figma Professional", category: "DESIGN", tag: "Sale", image: "/hero/perplexity-pro.jpg", oldPrice: "$15.00", newPrice: "$6.75" },
 ];
 
 export function MobileCommunityPicks() {
@@ -64,47 +65,48 @@ export function MobileCommunityPicks() {
             {pair.map((prod) => (
               <div 
                 key={prod.id} 
-                className="flex flex-col relative w-[calc(50%-0.375rem)] h-[256px] shrink-0 rounded-[6px] overflow-hidden bg-[#303030] shadow-sm"
+                className="flex flex-col relative w-[calc(50%-0.375rem)] shrink-0 rounded-[6px] overflow-hidden bg-white shadow-sm"
               >
                 {/* Image Container */}
-                <div className="relative w-full h-[140px] shrink-0 bg-[#1e1e1e]">
+                <div className="relative w-full h-[160px] shrink-0 bg-[#f5f5f5] flex items-center justify-center p-4">
                   <img 
                     src={prod.image} 
                     alt={prod.title} 
-                    className="w-full h-full object-cover"
+                    className="max-w-full max-h-full object-contain"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
                   {prod.tag && (
-                    <div className="absolute top-1.5 left-1.5 bg-gradient-to-r from-[#FACC15] to-[#F59E0B] px-1.5 py-0.5 rounded-[2px] border border-[#F59E0B]/50 shadow-sm">
-                      <span className="text-black text-[8px] font-extrabold tracking-wide uppercase">
+                    <div className="absolute top-2 left-2 bg-[#D65324] px-2.5 py-1 rounded-full">
+                      <span className="text-white text-[10px] font-bold">
                         {prod.tag}
                       </span>
                     </div>
                   )}
+                  {/* Cart Button */}
+                  <button className="absolute bottom-2 right-2 w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white shadow-md border border-gray-100">
+                    <IoBagOutline className="w-[16px] h-[16px] text-gray-700" />
+                  </button>
                 </div>
 
                 {/* Content Container */}
-                <div className={`p-3.5 flex flex-col flex-1 justify-between ${prod.bgColor}`}>
-                  <h3 className="text-white text-[13.5px] sm:text-[14.5px] font-bold leading-snug mb-2 line-clamp-3">
+                <div className="px-3 pt-2.5 pb-3 flex flex-col">
+                  <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">
+                    {prod.category}
+                  </span>
+                  <h3 className="text-gray-900 text-[13.5px] sm:text-[14px] font-bold leading-snug line-clamp-1 mb-2">
                     {prod.title}
                   </h3>
-
-                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
-                    <span className="bg-white/95 text-gray-900 shadow-sm text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
-                      {prod.discount}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#D65324] text-[14px] font-extrabold">
+                      {prod.newPrice}
                     </span>
-                    <div className="flex flex-col items-end leading-tight">
-                      {prod.oldPrice && (
-                        <span className="text-gray-400 line-through text-[11px]">
-                          {prod.oldPrice}
-                        </span>
-                      )}
-                      <span className="text-white text-[14.5px] font-extrabold mt-[1px]">
-                        {prod.newPrice}
+                    {prod.oldPrice && (
+                      <span className="text-gray-400 line-through text-[12px]">
+                        {prod.oldPrice}
                       </span>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>

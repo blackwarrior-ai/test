@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import { IoBagOutline } from "react-icons/io5";
 
 const LIMITED_STOCK = [
-  { id: 1, title: "Claude Pro Annual", tag: "ALMOST GONE", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$8.99", discount: "-55%", bgColor: "bg-[#9d83b0]" },
-  { id: 2, title: "Suno AI Music Pro", tag: "LOW STOCK", image: "/hero/gemini-pro.png", oldPrice: "$25.00", newPrice: "$12.49", discount: "-50%", bgColor: "bg-[#9d83b0]" },
-  { id: 3, title: "Runway ML Pro", tag: "LAST FEW", image: "/hero/grok.jpg", oldPrice: "$35.00", newPrice: "$15.99", discount: "-54%", bgColor: "bg-[#9d83b0]" },
-  { id: 4, title: "Pika Labs Premium", tag: "HURRY UP", image: "/hero/canva-pro.jpg", oldPrice: "$18.00", newPrice: "$7.20", discount: "-60%", bgColor: "bg-[#9d83b0]" },
-  { id: 5, title: "Leonardo AI Pro", tag: "SELLING FAST", image: "/hero/perplexity-pro.jpg", oldPrice: "$24.00", newPrice: "$9.60", discount: "-60%", bgColor: "bg-[#9d83b0]" },
-  { id: 6, title: "Jasper AI Business", tag: "LIMITED", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$49.00", newPrice: "$19.60", discount: "-60%", bgColor: "bg-[#9d83b0]" },
-  { id: 7, title: "Descript Pro Plan", tag: "FEW LEFT", image: "/hero/gemini-pro.png", oldPrice: "$28.00", newPrice: "$11.20", discount: "-60%", bgColor: "bg-[#9d83b0]" },
-  { id: 8, title: "Luma Dream Machine", tag: "RARE DEAL", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.00", discount: "-60%", bgColor: "bg-[#9d83b0]" },
+  { id: 1, title: "Claude Pro Annual", category: "AI ASSISTANT", tag: "Sale", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$20.00", newPrice: "$8.99" },
+  { id: 2, title: "Suno AI Music Pro", category: "AI MUSIC", tag: "Sale", image: "/hero/gemini-pro.png", oldPrice: "$25.00", newPrice: "$12.49" },
+  { id: 3, title: "Runway ML Pro", category: "AI VIDEO", tag: "Sale", image: "/hero/grok.jpg", oldPrice: "$35.00", newPrice: "$15.99" },
+  { id: 4, title: "Pika Labs Premium", category: "AI VIDEO", tag: "Sale", image: "/hero/canva-pro.jpg", oldPrice: "$18.00", newPrice: "$7.20" },
+  { id: 5, title: "Leonardo AI Pro", category: "AI ART", tag: "Sale", image: "/hero/perplexity-pro.jpg", oldPrice: "$24.00", newPrice: "$9.60" },
+  { id: 6, title: "Jasper AI Business", category: "AI WRITING", tag: "Sale", image: "/hero/chatgpt-logo-dl.jpg", oldPrice: "$49.00", newPrice: "$19.60" },
+  { id: 7, title: "Descript Pro Plan", category: "EDITING", tag: "Sale", image: "/hero/gemini-pro.png", oldPrice: "$28.00", newPrice: "$11.20" },
+  { id: 8, title: "Luma Dream Machine", category: "AI 3D", tag: "Sale", image: "/hero/grok.jpg", oldPrice: "$30.00", newPrice: "$12.00" },
 ];
 
 export function MobileLimitedStock() {
@@ -64,47 +65,48 @@ export function MobileLimitedStock() {
             {pair.map((prod) => (
               <div 
                 key={prod.id} 
-                className="flex flex-col relative w-[calc(50%-0.375rem)] h-[256px] shrink-0 rounded-[6px] overflow-hidden bg-[#303030] shadow-sm"
+                className="flex flex-col relative w-[calc(50%-0.375rem)] shrink-0 rounded-[6px] overflow-hidden bg-white shadow-sm"
               >
                 {/* Image Container */}
-                <div className="relative w-full h-[140px] shrink-0 bg-[#1e1e1e]">
+                <div className="relative w-full h-[160px] shrink-0 bg-[#f5f5f5] flex items-center justify-center p-4">
                   <img 
                     src={prod.image} 
                     alt={prod.title} 
-                    className="w-full h-full object-cover"
+                    className="max-w-full max-h-full object-contain"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
                   {prod.tag && (
-                    <div className="absolute top-1.5 left-1.5 bg-gradient-to-r from-[#FACC15] to-[#F59E0B] px-1.5 py-0.5 rounded-[2px] border border-[#F59E0B]/50 shadow-sm">
-                      <span className="text-black text-[8px] font-extrabold tracking-wide uppercase">
+                    <div className="absolute top-2 left-2 bg-[#D65324] px-2.5 py-1 rounded-full">
+                      <span className="text-white text-[10px] font-bold">
                         {prod.tag}
                       </span>
                     </div>
                   )}
+                  {/* Cart Button */}
+                  <button className="absolute bottom-2 right-2 w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white shadow-md border border-gray-100">
+                    <IoBagOutline className="w-[16px] h-[16px] text-gray-700" />
+                  </button>
                 </div>
 
                 {/* Content Container */}
-                <div className={`p-3.5 flex flex-col flex-1 justify-between ${prod.bgColor}`}>
-                  <h3 className="text-white text-[13.5px] sm:text-[14.5px] font-bold leading-snug mb-2 line-clamp-3">
+                <div className="px-3 pt-2.5 pb-3 flex flex-col">
+                  <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">
+                    {prod.category}
+                  </span>
+                  <h3 className="text-gray-900 text-[13.5px] sm:text-[14px] font-bold leading-snug line-clamp-1 mb-2">
                     {prod.title}
                   </h3>
-
-                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
-                    <span className="bg-white/95 text-gray-900 shadow-sm text-[12px] font-extrabold px-2 py-0.5 rounded-[3px]">
-                      {prod.discount}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#D65324] text-[14px] font-extrabold">
+                      {prod.newPrice}
                     </span>
-                    <div className="flex flex-col items-end leading-tight">
-                      {prod.oldPrice && (
-                        <span className="text-gray-400 line-through text-[11px]">
-                          {prod.oldPrice}
-                        </span>
-                      )}
-                      <span className="text-white text-[14.5px] font-extrabold mt-[1px]">
-                        {prod.newPrice}
+                    {prod.oldPrice && (
+                      <span className="text-gray-400 line-through text-[12px]">
+                        {prod.oldPrice}
                       </span>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
