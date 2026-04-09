@@ -12,8 +12,27 @@ export default function MobileHeader() {
 
   // States for Overlays
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuClosing, setIsMenuClosing] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+  const [isCurrencyClosing, setIsCurrencyClosing] = useState(false);
+
+  const closeMenu = () => {
+    setIsMenuClosing(true);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsMenuClosing(false);
+    }, 300);
+  };
+
+  const closeCurrency = () => {
+    setIsCurrencyClosing(true);
+    setTimeout(() => {
+      setIsCurrencyOpen(false);
+      setIsCurrencyClosing(false);
+    }, 300);
+  };
 
   // Global events to open modals from other components
   useEffect(() => {
@@ -124,37 +143,138 @@ export default function MobileHeader() {
       <style>{`
         @keyframes slideRight { from { transform: translateX(-100%); } to { transform: translateX(0); } }
         @keyframes slideLeft { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         .anim-slide-right { animation: slideRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .anim-slide-left { animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .anim-slide-up { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-slide-down { animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .anim-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+        .anim-fade-out { animation: fadeOut 0.25s ease-in forwards; }
       `}</style>
 
-      {/* --- MENU OVERLAY --- */}
+      {/* --- MENU OVERLAY (Floating Bottom Sheet) --- */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] flex lg:hidden">
-          <div className="absolute inset-0 bg-black/60 anim-fade-in" onClick={() => setIsMenuOpen(false)} />
-          <div className="relative w-[300px] max-w-[85vw] bg-white h-full shadow-2xl flex flex-col anim-slide-right">
-            <div className="flex items-center justify-between p-5 border-b border-gray-100">
-              <span className="font-[var(--font-logo)] text-[22px] font-extrabold tracking-[0.04em]">Digilink.</span>
-              <button aria-label="Close menu" onClick={() => setIsMenuOpen(false)} className="p-1">
-                <IoCloseOutline className="w-7 h-7 text-gray-800" />
-              </button>
-            </div>
-            <nav className="flex flex-col p-5 gap-6 text-[16px] font-semibold text-gray-900 overflow-y-auto">
-              <Link href="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>Shop All</Link>
-              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>AI Tools</Link>
-              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>Design & Creative</Link>
-              <Link href="/about" onClick={() => setIsMenuOpen(false)}>About Us</Link>
-              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+        <div className="fixed inset-0 z-[100] flex flex-col justify-end lg:hidden">
+          <div className={`absolute inset-0 bg-black/50 ${isMenuClosing ? 'anim-fade-out' : 'anim-fade-in'}`} onClick={closeMenu} />
+          <div className={`relative flex flex-col items-center ${isMenuClosing ? 'anim-slide-down' : 'anim-slide-up'}`}>
+            
+            {/* Close button — outside the card */}
+            <button 
+              aria-label="Close menu" 
+              onClick={closeMenu} 
+              className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center mb-2 shadow-lg"
+            >
+              <IoCloseOutline className="w-5 h-5 text-gray-800" />
+            </button>
+
+            {/* White card */}
+            <div className="bg-white rounded-[6px] shadow-2xl flex flex-col min-h-[65vh] max-h-[70vh] mx-2 mb-2 w-[calc(100%-16px)]">
+
+            {/* Nav Links */}
+            <nav className="flex flex-col px-6 pt-4 pb-6 overflow-y-auto font-[var(--font-barlow)]">
+              {[
+                { label: "Shop", href: "/shop", hasArrow: true },
+                { label: "AI Tools", href: "/shop", hasArrow: true },
+                { label: "Design & Creative", href: "/shop" },
+                { label: "About", href: "/about" },
+                { label: "Contact", href: "/contact" },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={closeMenu}
+                  className="flex items-center justify-between py-1.5"
+                >
+                  <span className="text-gray-900 text-[24px] font-bold">{item.label}</span>
+                  {item.hasArrow && (
+                    <span className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-900">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </span>
+                  )}
+                </Link>
+              ))}
             </nav>
-            <div className="mt-auto p-5 border-t border-gray-100 bg-gray-50">
-              <Link href="/account" onClick={() => setIsMenuOpen(false)} className="w-full bg-black text-white py-3.5 rounded-md font-bold text-[14px] block text-center">
-                Sign In / Register
-              </Link>
+
+            {/* Bottom: Social + Account */}
+            <div className="px-6 pt-4 pb-6 border-t border-gray-100 mt-auto font-[var(--font-barlow)]">
+              {/* Social Icons */}
+              <div className="flex items-center gap-5 mb-5">
+                {/* Facebook */}
+                <a href="#" className="text-gray-900 hover:text-gray-900 transition-colors">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                {/* X (Twitter) */}
+                <a href="#" className="text-gray-900 hover:text-gray-900 transition-colors">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                {/* Instagram */}
+                <a href="#" className="text-gray-900 hover:text-gray-900 transition-colors">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                </a>
+                {/* YouTube */}
+                <a href="#" className="text-gray-900 hover:text-gray-900 transition-colors">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+              </div>
+
+              {/* Currency + Account */}
+              <div className="flex items-center gap-6 text-[14px]">
+                <button onClick={() => setIsCurrencyOpen(true)} className="flex items-center gap-1.5 text-gray-900 font-medium">
+                  USD $
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <Link href="/account" onClick={closeMenu} className="text-gray-900 font-medium">
+                  Account
+                </Link>
+              </div>
             </div>
+
           </div>
+          </div>
+
+          {/* --- COUNTRY SELECTOR (over menu) --- */}
+          {isCurrencyOpen && (
+            <div className="absolute inset-0 z-[10] flex flex-col justify-end">
+              <div className={`absolute inset-0 bg-black/30 ${isCurrencyClosing ? 'anim-fade-out' : 'anim-fade-in'}`} onClick={closeCurrency} />
+              <div className={`relative flex flex-col items-center ${isCurrencyClosing ? 'anim-slide-down' : 'anim-slide-up'}`}>
+                <button
+                  aria-label="Close currency"
+                  onClick={closeCurrency}
+                  className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center mb-2 shadow-lg"
+                >
+                  <IoCloseOutline className="w-5 h-5 text-gray-800" />
+                </button>
+                <div className="bg-white rounded-[10px] shadow-2xl flex flex-col max-h-[60vh] mx-3 mb-3 w-[calc(100%-24px)]">
+                  <h3 className="text-center text-[16px] font-semibold text-gray-900 pt-5 pb-4 border-b border-gray-100">Country</h3>
+                  <div className="flex flex-col overflow-y-auto">
+                    {[
+                      { flag: "🇨🇦", label: "Canada (CAD $)" },
+                      { flag: "🇫🇷", label: "France (EUR €)" },
+                      { flag: "🇭🇰", label: "Hong Kong SAR (HKD $)" },
+                      { flag: "🇯🇵", label: "Japan (JPY ¥)" },
+                      { flag: "🇬🇧", label: "United Kingdom (GBP £)" },
+                      { flag: "🇺🇸", label: "United States (USD $)" },
+                    ].map((c) => (
+                      <button
+                        key={c.label}
+                        onClick={closeCurrency}
+                        className="flex items-center gap-3 px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                      >
+                        <span className="text-[20px]">{c.flag}</span>
+                        <span className="text-[15px] text-gray-800">{c.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       )}
 
