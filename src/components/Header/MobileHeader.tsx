@@ -15,6 +15,7 @@ export default function MobileHeader() {
   const [isMenuClosing, setIsMenuClosing] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartClosing, setIsCartClosing] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [isCurrencyClosing, setIsCurrencyClosing] = useState(false);
 
@@ -31,6 +32,14 @@ export default function MobileHeader() {
     setTimeout(() => {
       setIsCurrencyOpen(false);
       setIsCurrencyClosing(false);
+    }, 300);
+  };
+
+  const closeCart = () => {
+    setIsCartClosing(true);
+    setTimeout(() => {
+      setIsCartOpen(false);
+      setIsCartClosing(false);
     }, 300);
   };
 
@@ -143,12 +152,14 @@ export default function MobileHeader() {
       <style>{`
         @keyframes slideRight { from { transform: translateX(-100%); } to { transform: translateX(0); } }
         @keyframes slideLeft { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes slideLeftOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         .anim-slide-right { animation: slideRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .anim-slide-left { animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .anim-slide-left-out { animation: slideLeftOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .anim-slide-up { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .anim-slide-down { animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .anim-fade-in { animation: fadeIn 0.2s ease-out forwards; }
@@ -310,27 +321,37 @@ export default function MobileHeader() {
         </div>
       )}
 
-      {/* --- CART OVERLAY --- */}
+      {/* --- CART OVERLAY (Full page, slides from right) --- */}
       {isCartOpen && (
-        <div className="fixed inset-0 z-[100] flex justify-end lg:hidden">
-          <div className="absolute inset-0 bg-black/60 anim-fade-in" onClick={() => setIsCartOpen(false)} />
-          <div className="relative w-[340px] max-w-[90vw] bg-white h-full shadow-2xl flex flex-col anim-slide-left">
-            <div className="flex items-center justify-between p-5 border-b border-gray-100 bg-white">
-              <span className="font-extrabold text-[18px]">Shopping Cart (0)</span>
-              <button aria-label="Close cart" onClick={() => setIsCartOpen(false)} className="p-1">
-                <IoCloseOutline className="w-7 h-7 text-gray-800" />
+        <div className="fixed inset-0 z-[100] flex justify-end lg:hidden p-2">
+          <div className={`absolute inset-0 bg-black/50 ${isCartClosing ? 'anim-fade-out' : 'anim-fade-in'}`} onClick={closeCart} />
+          <div className={`relative w-full h-full bg-white rounded-[6px] shadow-2xl flex flex-col ${isCartClosing ? 'anim-slide-left-out' : 'anim-slide-left'}`}>
+            
+            {/* Top bar with X */}
+            <div className="flex items-center justify-end px-4 pt-4">
+              <button 
+                aria-label="Close cart" 
+                onClick={closeCart}
+              >
+                <IoCloseOutline className="w-6 h-6 text-gray-900" />
               </button>
             </div>
-            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gray-50/50">
-               <div className="w-[80px] h-[80px] bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                 <IoBagOutline className="w-10 h-10 text-gray-400" />
-               </div>
-               <p className="text-gray-900 font-bold text-[18px] mb-2">Your cart is empty</p>
-               <p className="text-gray-500 text-[14px]">Looks like you haven't added anything yet.</p>
-               <button onClick={() => setIsCartOpen(false)} className="mt-8 w-full bg-black text-white py-4 rounded-md font-bold text-[14px] hover:bg-gray-900 transition-colors">
-                 Start Shopping
-               </button>
+
+            {/* Cart content — centered */}
+            <div className="flex-1 flex flex-col items-center justify-center text-center px-8">
+              <div className="relative mb-4">
+                <IoBagOutline className="w-10 h-10 text-gray-900" />
+                <span className="absolute -top-1 -right-2 w-5 h-5 bg-gray-900 text-white text-[11px] font-bold rounded-full flex items-center justify-center">0</span>
+              </div>
+              <p className="text-gray-900 font-bold text-[16px] font-[var(--font-barlow)] mb-6">Your cart is empty</p>
+              <button 
+                onClick={closeCart} 
+                className="bg-gray-900 text-white py-3.5 px-10 rounded-full font-bold text-[14px] font-[var(--font-barlow)]"
+              >
+                Continue shopping
+              </button>
             </div>
+
           </div>
         </div>
       )}

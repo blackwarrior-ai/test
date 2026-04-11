@@ -18,6 +18,10 @@ import { MobileLimitedStock } from "@/components/Home/MobileLimitedStock";
 import { MobileCategoryBanners } from "@/components/Home/MobileCategoryBanners";
 import { MobileShopByCategories } from "@/components/Home/MobileShopByCategories";
 import { MobileInspiredSection } from "@/components/Home/MobileInspiredSection";
+import { MobileReviewsSection } from "@/components/Home/MobileReviewsSection";
+import { MobilePricingSection } from "@/components/Home/MobilePricingSection";
+import { MobileFaqSection } from "@/components/Home/MobileFaqSection";
+import { NewsletterPopup } from "@/components/Home/NewsletterPopup";
 import {
   TrendingProducts,
   TrustBadges,
@@ -32,6 +36,7 @@ import {
 export default function Home() {
   return (
     <>
+      <NewsletterPopup />
       <Header />
       <main>
         {/* Mobile: Hero full-screen only, then Categories Carousel */}
@@ -46,6 +51,9 @@ export default function Home() {
           <MobileLimitedStock />
           <MobileCategoryBanners />
           <MobileInspiredSection />
+          <MobileReviewsSection />
+          <MobilePricingSection />
+          <MobileFaqSection />
         </div>
 
         {/* Desktop: Category carousel under header, then hero */}
