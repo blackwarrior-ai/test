@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Poppins, Barlow } from "next/font/google";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -31,7 +32,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${instrumentSans.className} ${logoFont.variable} ${barlowFont.variable} text-[15px] font-medium antialiased`} suppressHydrationWarning>{children}</body>
+      <body className={`${instrumentSans.className} ${logoFont.variable} ${barlowFont.variable} text-[15px] font-medium antialiased`} suppressHydrationWarning>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
