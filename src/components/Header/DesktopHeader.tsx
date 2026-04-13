@@ -50,7 +50,7 @@ const navItems = [
 /* ── Globe SVG icon ── */
 function GlobeIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
     </svg>
@@ -60,7 +60,7 @@ function GlobeIcon() {
 /* ── Currency SVG icon ── */
 function CurrencyIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="5" width="20" height="14" rx="2" />
       <path d="M2 10h20" />
     </svg>
@@ -154,44 +154,52 @@ export default function DesktopHeader() {
           <div className="fixed inset-0 top-[120px] bg-black/40 backdrop-blur-sm -z-10 h-[100vh]" />
         )}
 
-        {/* ── Announcement Bar (dark, 40px) ── */}
-        <div ref={topBarRef} className="bg-[#1f1f1f] text-[#fafafa] text-[12px] font-medium font-[Inter,sans-serif]">
-          <div className="max-w-[1347px] mx-auto px-[36px] h-[40px] flex items-center justify-between">
+        {/* ── Announcement Bar (dark, 56px) ── */}
+        <div ref={topBarRef} className="bg-[#1f1f1f] text-[rgb(250,250,250)] text-[14px] font-normal leading-[17.5px] font-[Inter,sans-serif]">
+          <div className="max-w-[1585px] w-full mx-auto px-[36px] h-[56px] flex items-center justify-between">
 
             {/* Left: Social icons */}
             <div className="flex items-center gap-[24px]">
-              <Link href="#" aria-label="Facebook" className="opacity-70 hover:opacity-100 transition-opacity">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.12 5.35H17V2.14H14.54C11.63 2.14 10.45 3.79 10.45 6.07V8.16H7.94V11.23H10.46V19H14.03V11.23H17.14L17.47 8.16H14.03V6.66C14.03 5.76 14.39 5.35 15.12 5.35Z"/></svg>
+              <Link href="#" aria-label="Facebook" className="hover:text-white transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0"><path d="M9.03153 23L9 13H5V9H9V6.5C9 2.7886 11.2983 1 14.6091 1C16.1951 1 17.5581 1.11807 17.9553 1.17085V5.04948L15.6591 5.05052C13.8584 5.05052 13.5098 5.90614 13.5098 7.16171V9H18.75L16.75 13H13.5098V23H9.03153Z"/></svg>
               </Link>
-              <Link href="#" aria-label="X" className="opacity-70 hover:opacity-100 transition-opacity">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13.8984 10.4679L23.2325 0H21.0183L12.914 9.07186L6.44146 0H0L9.78911 13.6338L0 24.5938H2.21443L10.7725 15.0298L17.6166 24.5938H24.0575L13.898 10.4679H13.8984ZM11.8967 13.7744L10.9038 12.4042L3.01358 1.5173H6.41505L12.7788 10.2982L13.7717 11.6683L22.0195 23.0487H20.6179L11.8967 13.7747V13.7744Z"/></svg>
+              <Link href="#" aria-label="X" className="hover:text-white transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0"><path d="M13.8984 10.4679L21.3339 2H19.5687L13.1074 9.35221L7.95337 2H2L9.80183 13.1157L2 22H3.7652L10.5845 14.2315L16.03 22H21.9833M4.398 3.29892H7.10408L19.5687 20.7594H16.8626"/></svg>
               </Link>
-              <Link href="#" aria-label="Instagram" className="opacity-70 hover:opacity-100 transition-opacity">
-                <FaInstagram className="w-[15px] h-[15px]" />
+              <Link href="#" aria-label="Instagram" className="hover:text-white transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0"><path d="M12 2.98C14.94 2.98 15.28 2.99 16.44 3.04C17.14 3.04 17.83 3.18 18.48 3.42C18.96 3.6 19.39 3.88 19.75 4.24C20.12 4.59 20.4 5.03 20.57 5.51C20.81 6.16 20.94 6.85 20.95 7.55C21 8.71 21.01 9.06 21.01 12C21.01 14.94 21 15.28 20.95 16.44C20.95 17.14 20.81 17.83 20.57 18.48C20.39 18.95 20.11 19.39 19.75 19.75C19.39 20.11 18.96 20.39 18.48 20.57C17.83 20.81 17.14 20.94 16.44 20.95C15.28 21 14.93 21.01 12 21.01C9.07 21.01 8.72 21 7.55 20.95C6.85 20.95 6.16 20.81 5.51 20.57C5.03 20.39 4.6 20.11 4.24 19.75C3.87 19.4 3.59 18.96 3.42 18.48C3.18 17.83 3.05 17.14 3.04 16.44C2.99 15.28 2.98 14.93 2.98 12C2.98 9.07 2.99 8.72 3.04 7.55C3.04 6.85 3.18 6.16 3.42 5.51C3.6 5.03 3.88 4.6 4.24 4.24C4.59 3.87 5.03 3.59 5.51 3.42C6.16 3.18 6.85 3.05 7.55 3.04C8.71 2.99 9.06 2.98 12 2.98ZM12 1C9.01 1 8.64 1.01 7.47 1.07C6.56 1.09 5.65 1.26 4.8 1.58C4.07 1.86 3.4 2.3 2.85 2.85C2.3 3.41 1.86 4.07 1.58 4.8C1.26 5.65 1.09 6.56 1.07 7.47C1.02 8.64 1 9.01 1 12C1 14.99 1.01 15.36 1.07 16.53C1.09 17.44 1.26 18.35 1.58 19.2C1.86 19.93 2.3 20.6 2.85 21.15C3.41 21.7 4.07 22.14 4.8 22.42C5.65 22.74 6.56 22.91 7.47 22.93C8.64 22.98 9.01 23 12 23C14.99 23 15.36 22.99 16.53 22.93C17.44 22.91 18.35 22.74 19.2 22.42C19.93 22.14 20.6 21.7 21.15 21.15C21.7 20.59 22.14 19.93 22.42 19.2C22.74 18.35 22.91 17.44 22.93 16.53C22.98 15.36 23 14.99 23 12C23 9.01 22.99 8.64 22.93 7.47C22.91 6.56 22.74 5.65 22.42 4.8C22.14 4.07 21.7 3.4 21.15 2.85C20.59 2.3 19.93 1.86 19.2 1.58C18.35 1.26 17.44 1.09 16.53 1.07C15.36 1.02 14.99 1 12 1ZM12 6.35C10.88 6.35 9.79 6.68 8.86 7.3C7.93 7.92 7.21 8.8 6.78 9.84C6.35 10.87 6.24 12.01 6.46 13.1C6.68 14.2 7.22 15.2 8.01 15.99C8.8 16.78 9.81 17.32 10.9 17.54C12 17.76 13.13 17.65 14.16 17.22C15.19 16.79 16.07 16.07 16.7 15.14C17.32 14.21 17.65 13.12 17.65 12C17.65 10.5 17.05 9.06 16 8.01C14.94 6.95 13.5 6.36 12.01 6.36L12 6.35ZM12 15.67C11.27 15.67 10.57 15.45 9.96 15.05C9.36 14.65 8.89 14.07 8.61 13.4C8.33 12.73 8.26 11.99 8.4 11.28C8.54 10.57 8.89 9.92 9.4 9.4C9.91 8.88 10.57 8.54 11.28 8.4C11.99 8.26 12.73 8.33 13.4 8.61C14.07 8.89 14.64 9.36 15.05 9.96C15.45 10.56 15.67 11.27 15.67 12C15.67 12.97 15.28 13.91 14.6 14.59C13.91 15.28 12.98 15.66 12.01 15.66L12 15.67ZM17.87 7.45C18.6 7.45 19.19 6.86 19.19 6.13C19.19 5.4 18.6 4.81 17.87 4.81C17.14 4.81 16.55 5.4 16.55 6.13C16.55 6.86 17.14 7.45 17.87 7.45Z"/></svg>
               </Link>
-              <Link href="#" aria-label="YouTube" className="opacity-70 hover:opacity-100 transition-opacity">
-                <FaYoutube className="w-[16px] h-[16px]" />
+              <Link href="#" aria-label="YouTube" className="hover:text-white transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0"><path d="M23.8 7.6C23.8 7.6 23.6 5.9 22.8 5.2C21.9 4.2 20.9 4.2 20.4 4.2C17 4 12 4 12 4C12 4 7 4 3.6 4.2C3.1 4.3 2.1 4.3 1.2 5.2C0.5 5.9 0.2 7.6 0.2 7.6C0.2 7.6 0 9.5 0 11.5V13.3C0 15.2 0.2 17.2 0.2 17.2C0.2 17.2 0.4 18.9 1.2 19.6C2.1 20.6 3.3 20.5 3.8 20.6C5.7 20.8 12 20.8 12 20.8C12 20.8 17 20.8 20.4 20.5C20.9 20.4 21.9 20.4 22.8 19.5C23.5 18.8 23.8 17.1 23.8 17.1C23.8 17.1 24 15.2 24 13.2V11.4C24 9.5 23.8 7.6 23.8 7.6ZM9.5 15.5V8.8L16 12.2L9.5 15.5Z"/></svg>
               </Link>
             </div>
 
             {/* Center: Slide carousel */}
-            <div className="flex items-center gap-[18px] absolute left-1/2 -translate-x-1/2">
+            <div className="flex items-center absolute left-1/2 -translate-x-1/2">
               <button
                 onClick={() => setSlideIdx(p => (p - 1 + slides.length) % slides.length)}
-                className="opacity-50 hover:opacity-100 transition-opacity text-[16px] leading-none flex items-center justify-center w-[20px] h-[20px]"
+                className="hover:text-white transition-colors text-[16px] leading-none flex items-center justify-center w-[44px] h-[56px] shrink-0"
                 aria-label="Previous"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <svg width="16" height="16" viewBox="0 0 15 14" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.33333 2.91675L2.25 7.00004M2.25 7.00004L6.33333 11.0834M2.25 7.00004H12.75"></path>
+                </svg>
               </button>
-              <Link key={slideIdx} href={slide.href} className="ann-slide hover:opacity-100 transition-opacity tracking-[0.01em]">
-                {slide.text}
-              </Link>
+
+              <div className="w-[448px] h-[56px] flex justify-center items-center overflow-hidden">
+                <Link key={slideIdx} href={slide.href} className="ann-slide hover:text-white transition-colors tracking-[0.01em] text-center px-4 w-full truncate">
+                  {slide.text}
+                </Link>
+              </div>
+
               <button
                 onClick={() => setSlideIdx(p => (p + 1) % slides.length)}
-                className="opacity-50 hover:opacity-100 transition-opacity text-[16px] leading-none flex items-center justify-center w-[20px] h-[20px]"
+                className="hover:text-white transition-colors text-[16px] leading-none flex items-center justify-center w-[44px] h-[56px] shrink-0"
                 aria-label="Next"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="16" height="16" viewBox="0 0 15 14" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.00004H12.75M12.75 7.00004L8.66667 2.91675M12.75 7.00004L8.66667 11.0834"></path>
+                </svg>
               </button>
               <button
                 onClick={() => setPaused(v => !v)}
@@ -208,14 +216,14 @@ export default function DesktopHeader() {
               <div ref={langRef} className="relative z-[110]">
                 <button
                   onClick={() => setLangOpen(v => !v)}
-                  className="flex items-center gap-[6px] opacity-80 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-[6px] hover:text-white transition-colors"
                 >
                   <GlobeIcon />
                   <span>English</span>
                   <IoChevronDown className={`w-[10px] h-[10px] ml-1 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
                 </button>
                 {langOpen && (
-                  <div className="absolute right-0 top-full mt-[10px] w-[140px] rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[#fafafa]">
+                  <div className="absolute right-0 top-full mt-[10px] w-[140px] rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[rgb(250,250,250)]">
                     {["English", "French", "German", "Spanish"].map(lang => (
                       <button key={lang} onClick={() => setLangOpen(false)} className="w-full px-4 py-2.5 text-left text-[13px] hover:bg-white/10 transition-colors">
                         {lang}
@@ -229,14 +237,14 @@ export default function DesktopHeader() {
               <div ref={countryRef} className="relative z-[110]">
                 <button
                   onClick={() => setCountryOpen(v => !v)}
-                  className="flex items-center gap-[6px] opacity-80 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-[6px] hover:text-white transition-colors"
                 >
                   <CurrencyIcon />
                   <span>{current.name} ({current.code})</span>
                   <IoChevronDown className={`w-[10px] h-[10px] ml-1 transition-transform duration-200 ${countryOpen ? "rotate-180" : ""}`} />
                 </button>
                 {countryOpen && (
-                  <div className="absolute right-0 top-full mt-[10px] w-[240px] max-h-[360px] overflow-y-auto rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[#fafafa]">
+                  <div className="absolute right-0 top-full mt-[10px] w-[240px] max-h-[360px] overflow-y-auto rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[rgb(250,250,250)]">
                     {countries.map((c, i) => (
                       <button
                         key={c.name}
@@ -255,7 +263,11 @@ export default function DesktopHeader() {
         </div>
 
         {/* ── Main Header (white) ── */}
-        <div className="relative bg-white h-[80px] flex items-center shadow-sm">
+        <div 
+          className={`relative bg-white flex items-center shadow-sm transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+            headerOffset > 0 ? "h-[96px]" : "h-[113px]"
+          }`}
+        >
           <div className="max-w-[1347px] w-full mx-auto px-[36px] flex items-center gap-8">
 
             {/* Logo */}
