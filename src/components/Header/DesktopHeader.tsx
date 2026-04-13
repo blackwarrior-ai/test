@@ -2,504 +2,341 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 import { HiOutlineSearch } from "react-icons/hi";
-import { SlLocationPin } from "react-icons/sl";
 import { HiOutlineUser } from "react-icons/hi2";
 import { IoBagOutline } from "react-icons/io5";
-import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-/* ── Country list with CSS flag colours ── */
-const countries: { name: string; code: string; flag: React.ReactNode }[] = [
-  {
-    name: "Australia",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 bg-[#00008B] relative">
-        <span className="absolute inset-0 flex items-center justify-center text-white text-[8px] leading-none font-bold">🇦🇺</span>
-      </span>
-    ),
-  },
-  {
-    name: "Austria",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 flex-col">
-        <span className="w-full h-1/3 bg-[#EF3340]" />
-        <span className="w-full h-1/3 bg-white" />
-        <span className="w-full h-1/3 bg-[#EF3340]" />
-      </span>
-    ),
-  },
-  {
-    name: "Belgium",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0">
-        <span className="w-1/3 h-full bg-black" />
-        <span className="w-1/3 h-full bg-[#FDDA24]" />
-        <span className="w-1/3 h-full bg-[#EF3340]" />
-      </span>
-    ),
-  },
-  {
-    name: "Canada",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 items-center justify-center text-[10px] leading-none">🇨🇦</span>
-    ),
-  },
-  {
-    name: "Czechia",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 items-center justify-center text-[10px] leading-none">🇨🇿</span>
-    ),
-  },
-  {
-    name: "Denmark",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 items-center justify-center text-[10px] leading-none">🇩🇰</span>
-    ),
-  },
-  {
-    name: "Finland",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 items-center justify-center text-[10px] leading-none">🇫🇮</span>
-    ),
-  },
-  {
-    name: "France",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0">
-        <span className="w-1/3 h-full bg-[#002395]" />
-        <span className="w-1/3 h-full bg-white" />
-        <span className="w-1/3 h-full bg-[#EF4135]" />
-      </span>
-    ),
-  },
-  {
-    name: "Germany",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 flex-col">
-        <span className="w-full h-1/3 bg-black" />
-        <span className="w-full h-1/3 bg-[#DD0000]" />
-        <span className="w-full h-1/3 bg-[#FFCC00]" />
-      </span>
-    ),
-  },
-  {
-    name: "Hong Kong SAR",
-    code: "USD $",
-    flag: (
-      <span className="inline-flex w-[20px] h-[14px] rounded-[2px] overflow-hidden shrink-0 items-center justify-center text-[10px] leading-none">🇭🇰</span>
-    ),
-  },
+import { DesktopSearchDrawer } from "./DesktopSearchDrawer";
+import { DesktopCartDrawer } from "./DesktopCartDrawer";
+import { DesktopMegaMenu } from "./DesktopMegaMenu";
+
+/* ── Country list ── */
+const countries: { name: string; code: string }[] = [
+  { name: "Australia", code: "USD $" },
+  { name: "Austria", code: "USD $" },
+  { name: "Belgium", code: "EUR €" },
+  { name: "Canada", code: "CAD $" },
+  { name: "Czechia", code: "USD $" },
+  { name: "Denmark", code: "USD $" },
+  { name: "Finland", code: "EUR €" },
+  { name: "France", code: "EUR €" },
+  { name: "Germany", code: "EUR €" },
+  { name: "Hong Kong SAR", code: "USD $" },
+  { name: "Pakistan", code: "USD $" },
+  { name: "United Kingdom", code: "GBP £" },
+  { name: "United States", code: "USD $" },
 ];
 
-/* ── Nav items with dropdowns ── */
-const navItems: {
-  label: string;
-  href: string;
-  hasDropdown: boolean;
-  isHighlighted?: boolean;
-  children?: { label: string; href: string; desc?: string }[];
-}[] = [
-  {
-    label: "Shop All",
-    href: "/shop",
-    hasDropdown: true,
-    children: [
-      { label: "AI Assistants", href: "/shop?cat=ai-assistants", desc: "ChatGPT, Gemini, Grok & more" },
-      { label: "Design Tools", href: "/shop?cat=design-tools", desc: "Canva, Midjourney, Adobe" },
-      { label: "Coding", href: "/shop?cat=coding", desc: "GitHub Copilot & dev tools" },
-      { label: "Privacy & VPN", href: "/shop?cat=privacy", desc: "NordVPN, Surfshark & more" },
-      { label: "View All Products", href: "/shop" },
-    ],
-  },
-  {
-    label: "AI Tools",
-    href: "/shop?cat=ai-assistants",
-    hasDropdown: true,
-    children: [
-      { label: "ChatGPT Plus", href: "/products/chatgpt-private" },
-      { label: "Gemini Pro", href: "/products/gemini-pro" },
-      { label: "SuperGrok", href: "/products/supergrok" },
-      { label: "Perplexity Pro", href: "/products/perplexity-pro" },
-    ],
-  },
-  {
-    label: "Design & Creative",
-    href: "/shop?cat=design-tools",
-    hasDropdown: true,
-    children: [
-      { label: "Canva Pro", href: "/products/canva-pro" },
-      { label: "Midjourney Pro", href: "/products/midjourney-pro" },
-      { label: "Adobe Creative Cloud", href: "/products/adobe-creative-cloud" },
-    ],
-  },
-  {
-    label: "Productivity",
-    href: "/shop?cat=productivity",
-    hasDropdown: false,
-  },
-  {
-    label: "About",
-    href: "/about",
-    hasDropdown: true,
-    children: [
-      { label: "About Us", href: "/about" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  { label: "Contact", href: "/contact", hasDropdown: false },
-  { label: "On Sale", href: "/shop", hasDropdown: false, isHighlighted: true },
+/* ── Announcement slides ── */
+const slides = [
+  { text: "Save up to 60% with code BLACKFRIDAY", href: "/shop" },
+  { text: "A question? Visit our contact page", href: "/contact" },
+  { text: "New arrivals: AI & Design tools added weekly", href: "/shop" },
 ];
 
-/* ── Animated hamburger / cross icon ── */
-function MenuIcon({ open }: { open: boolean }) {
+/* ── Nav items ── */
+const navItems = [
+  { label: "Shop", href: "/shop", hasMegaMenu: true },
+  { label: "Collections", href: "/shop" },
+  { label: "Explore", href: "/shop" },
+  { label: "Software", href: "/software" },
+  { label: "Contact", href: "/contact" },
+  { label: "Theme features", href: "/about" },
+];
+
+/* ── Globe SVG icon ── */
+function GlobeIcon() {
   return (
-    <div className="w-[22px] h-[16px] relative flex flex-col justify-between">
-      <span
-        className={`block h-[2px] w-full bg-gray-900 rounded transition-all duration-300 ease-in-out origin-center ${
-          open ? "translate-y-[7px] rotate-45" : ""
-        }`}
-      />
-      <span
-        className={`block h-[2px] w-full bg-gray-900 rounded transition-all duration-300 ease-in-out ${
-          open ? "opacity-0 scale-x-0" : "opacity-100"
-        }`}
-      />
-      <span
-        className={`block h-[2px] w-full bg-gray-900 rounded transition-all duration-300 ease-in-out origin-center ${
-          open ? "-translate-y-[7px] -rotate-45" : ""
-        }`}
-      />
-    </div>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
+    </svg>
+  );
+}
+
+/* ── Currency SVG icon ── */
+function CurrencyIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+    </svg>
   );
 }
 
 export default function DesktopHeader() {
   const headerRef = useRef<HTMLElement>(null);
   const topBarRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const countryRef = useRef<HTMLDivElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
 
   const [spacerHeight, setSpacerHeight] = useState(0);
   const [topBarHeight, setTopBarHeight] = useState(0);
   const [headerOffset, setHeaderOffset] = useState(0);
-  const [navCollapsed, setNavCollapsed] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  
   const [countryOpen, setCountryOpen] = useState(false);
-  const [selected, setSelected] = useState(2); // Belgium default
-  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
-  const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [langOpen, setLangOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(10); // Pakistan
+  
+  // Drawer & Menu states
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Measure heights
+  /* ── Measure heights ── */
   useEffect(() => {
     const measure = () => {
-      if (headerRef.current && window.scrollY <= 5) {
-        setSpacerHeight(headerRef.current.offsetHeight);
-      }
-      if (topBarRef.current) {
-        setTopBarHeight(topBarRef.current.offsetHeight);
-      }
+      if (topBarRef.current) setTopBarHeight(topBarRef.current.offsetHeight);
+      if (headerRef.current && window.scrollY <= 5) setSpacerHeight(headerRef.current.offsetHeight);
     };
     measure();
+    const t = setTimeout(measure, 100);
     window.addEventListener("resize", measure, { passive: true });
-    return () => window.removeEventListener("resize", measure);
+    return () => { clearTimeout(t); window.removeEventListener("resize", measure); };
   }, []);
 
+  /* ── Scroll: slide announcement bar up ── */
   const handleScroll = useCallback(() => {
-    const scrollY = window.scrollY;
-    const offset = Math.min(scrollY, topBarHeight);
-    setHeaderOffset(offset);
-    const collapsed = scrollY > topBarHeight;
-    setNavCollapsed(collapsed);
-    if (!collapsed) setMenuOpen(false);
+    setHeaderOffset(Math.min(window.scrollY, topBarHeight));
   }, [topBarHeight]);
-
   useEffect(() => {
-    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Close country dropdown on outside click
+  /* ── Auto-cycle slides ── */
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setCountryOpen(false);
-      }
-    }
-    if (countryOpen) {
-      document.addEventListener("mousedown", handleClick);
-    }
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [countryOpen]);
+    if (paused) return;
+    const iv = setInterval(() => setSlideIdx(p => (p + 1) % slides.length), 4000);
+    return () => clearInterval(iv);
+  }, [paused]);
 
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => !prev);
-  }, []);
+  /* ── Close dropdowns on outside click ── */
+  useEffect(() => {
+    if (!countryOpen && !langOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (countryRef.current && !countryRef.current.contains(e.target as Node)) setCountryOpen(false);
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [countryOpen, langOpen]);
 
-  const showNav = !navCollapsed || menuOpen;
-  const current = countries[selected];
+  const current = countries[selectedCountry];
+  const slide = slides[slideIdx];
+
+  const handleMenuEnter = () => {
+    if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+    setMegaMenuOpen(true);
+  };
+
+  const handleMenuLeave = () => {
+    menuTimeoutRef.current = setTimeout(() => {
+      setMegaMenuOpen(false);
+    }, 200); // slight delay
+  };
 
   return (
     <>
       <header
         ref={headerRef}
-        className="fixed left-0 right-0 z-50 text-[15px] font-medium antialiased"
+        className="fixed left-0 right-0 z-50 group/header"
         style={{ top: `-${headerOffset}px` }}
       >
-        {/* Tier 1 – Announcement Bar */}
-        <div ref={topBarRef} className="bg-[#1D349A] text-white">
-          <div className="max-w-[1347px] mx-auto px-[16px] py-3 grid grid-cols-3 gap-8">
-            {/* Left Links */}
-            <div className="flex items-center gap-5">
-              <Link href="/help" className="hover:text-gray-200 transition-colors duration-200">
-                Help Center
+        {/* ── Dark Backdrop when mega menu is open ── */}
+        {megaMenuOpen && (
+          <div className="fixed inset-0 top-[120px] bg-black/40 backdrop-blur-sm -z-10 h-[100vh]" />
+        )}
+
+        {/* ── Announcement Bar (dark, 40px) ── */}
+        <div ref={topBarRef} className="bg-[#1f1f1f] text-[#fafafa] text-[12px] font-medium font-[Inter,sans-serif]">
+          <div className="max-w-[1347px] mx-auto px-[36px] h-[40px] flex items-center justify-between">
+
+            {/* Left: Social icons */}
+            <div className="flex items-center gap-[24px]">
+              <Link href="#" aria-label="Facebook" className="opacity-70 hover:opacity-100 transition-opacity">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.12 5.35H17V2.14H14.54C11.63 2.14 10.45 3.79 10.45 6.07V8.16H7.94V11.23H10.46V19H14.03V11.23H17.14L17.47 8.16H14.03V6.66C14.03 5.76 14.39 5.35 15.12 5.35Z"/></svg>
               </Link>
-              <Link href="/find-store" className="hover:text-gray-200 transition-colors duration-200">
-                Find a Store
+              <Link href="#" aria-label="X" className="opacity-70 hover:opacity-100 transition-opacity">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13.8984 10.4679L23.2325 0H21.0183L12.914 9.07186L6.44146 0H0L9.78911 13.6338L0 24.5938H2.21443L10.7725 15.0298L17.6166 24.5938H24.0575L13.898 10.4679H13.8984ZM11.8967 13.7744L10.9038 12.4042L3.01358 1.5173H6.41505L12.7788 10.2982L13.7717 11.6683L22.0195 23.0487H20.6179L11.8967 13.7747V13.7744Z"/></svg>
               </Link>
-              <Link href="/contact" className="hover:text-gray-200 transition-colors duration-200">
-                Contact
+              <Link href="#" aria-label="Instagram" className="opacity-70 hover:opacity-100 transition-opacity">
+                <FaInstagram className="w-[15px] h-[15px]" />
+              </Link>
+              <Link href="#" aria-label="YouTube" className="opacity-70 hover:opacity-100 transition-opacity">
+                <FaYoutube className="w-[16px] h-[16px]" />
               </Link>
             </div>
 
-            {/* Center Announcement */}
-            <div className="text-center">
-              <span className="tracking-wide">🤚 Free Express Shipping on orders $500!</span>
+            {/* Center: Slide carousel */}
+            <div className="flex items-center gap-[18px] absolute left-1/2 -translate-x-1/2">
+              <button
+                onClick={() => setSlideIdx(p => (p - 1 + slides.length) % slides.length)}
+                className="opacity-50 hover:opacity-100 transition-opacity text-[16px] leading-none flex items-center justify-center w-[20px] h-[20px]"
+                aria-label="Previous"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              </button>
+              <Link key={slideIdx} href={slide.href} className="ann-slide hover:opacity-100 transition-opacity tracking-[0.01em]">
+                {slide.text}
+              </Link>
+              <button
+                onClick={() => setSlideIdx(p => (p + 1) % slides.length)}
+                className="opacity-50 hover:opacity-100 transition-opacity text-[16px] leading-none flex items-center justify-center w-[20px] h-[20px]"
+                aria-label="Next"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+              <button
+                onClick={() => setPaused(v => !v)}
+                className="sr-only"
+                aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+              >
+                {paused ? "Play" : "Pause"}
+              </button>
             </div>
 
-            {/* Right Section */}
-            <div className="flex items-center justify-end gap-4">
-              {/* Country Selector with Dropdown */}
-              <div ref={dropdownRef} className="relative">
+            {/* Right: Language + Country */}
+            <div className="flex items-center gap-[28px]">
+              {/* Language */}
+              <div ref={langRef} className="relative z-[110]">
                 <button
-                  onClick={() => setCountryOpen((v) => !v)}
-                  className="flex items-center gap-1.5 hover:text-gray-200 transition-colors duration-200"
+                  onClick={() => setLangOpen(v => !v)}
+                  className="flex items-center gap-[6px] opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  {current.flag}
-                  <span>{current.name} ({current.code})</span>
-                  <IoChevronUp
-                    className={`w-3 h-3 transition-transform duration-200 ${
-                      countryOpen ? "rotate-0" : "rotate-180"
-                    }`}
-                  />
+                  <GlobeIcon />
+                  <span>English</span>
+                  <IoChevronDown className={`w-[10px] h-[10px] ml-1 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} />
                 </button>
-
-                {countryOpen && (
-                  <div className="absolute right-0 top-full mt-3 w-[260px] max-h-[400px] overflow-y-auto rounded-md bg-[#1D349A] border border-white/15 shadow-2xl z-[100] py-1">
-                    {countries.map((country, i) => (
-                      <button
-                        key={country.name}
-                        onClick={() => {
-                          setSelected(i);
-                          setCountryOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-150 ${
-                          i === selected ? "bg-white/10 font-bold" : "hover:bg-white/10"
-                        }`}
-                      >
-                        {country.flag}
-                        <span className={i === selected ? "underline underline-offset-2" : ""}>
-                          {country.name}（{country.code}）
-                        </span>
+                {langOpen && (
+                  <div className="absolute right-0 top-full mt-[10px] w-[140px] rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[#fafafa]">
+                    {["English", "French", "German", "Spanish"].map(lang => (
+                      <button key={lang} onClick={() => setLangOpen(false)} className="w-full px-4 py-2.5 text-left text-[13px] hover:bg-white/10 transition-colors">
+                        {lang}
                       </button>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* Social Icons */}
-              <div className="flex items-center gap-3.5 ml-3">
-                <Link href="#" className="hover:text-gray-200 transition-colors duration-200" aria-label="Facebook">
-                  <FaFacebookF className="w-3.5 h-3.5" />
-                </Link>
-                <Link href="#" className="hover:text-gray-200 transition-colors duration-200" aria-label="Twitter">
-                  <FaXTwitter className="w-3.5 h-3.5" />
-                </Link>
-                <Link href="#" className="hover:text-gray-200 transition-colors duration-200" aria-label="Instagram">
-                  <FaInstagram className="w-3.5 h-3.5" />
-                </Link>
-                <Link href="#" className="hover:text-gray-200 transition-colors duration-200" aria-label="TikTok">
-                  <FaTiktok className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 2 – Main Header */}
-        <div className="bg-white transition-colors duration-200">
-          <div className="max-w-[1347px] mx-auto py-[20px] px-[16px]">
-            <div className="w-full h-[48px] flex items-center gap-x-[1.2rem]">
-
-              {/* Hamburger + Logo group */}
-              <div className="flex items-center shrink-0 mr-[1.2rem]">
+              {/* Country */}
+              <div ref={countryRef} className="relative z-[110]">
                 <button
-                  onClick={toggleMenu}
-                  className={`flex items-center h-10 transition-all duration-300 ease-in-out ${
-                    navCollapsed
-                      ? "opacity-100 w-[34px]"
-                      : "opacity-0 w-0 overflow-hidden pointer-events-none"
-                  }`}
-                  aria-label={menuOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setCountryOpen(v => !v)}
+                  className="flex items-center gap-[6px] opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  <MenuIcon open={menuOpen} />
+                  <CurrencyIcon />
+                  <span>{current.name} ({current.code})</span>
+                  <IoChevronDown className={`w-[10px] h-[10px] ml-1 transition-transform duration-200 ${countryOpen ? "rotate-180" : ""}`} />
                 </button>
-
-                <Link href="/">
-                  <span className="font-[var(--font-logo)] text-[28px] font-extrabold tracking-[0.04em] text-gray-900">
-                    Digilink<span className="logo-dot">.</span>
-                  </span>
-                </Link>
-              </div>
-
-              {/* Search Bar */}
-              <div className="flex-1 flex items-center justify-start">
-                <div className="flex w-[600px] h-[48px] items-center rounded-full overflow-hidden bg-[#EDEDED] transition-colors duration-200">
-                  <Link href="/shop" className="flex items-center gap-1.5 px-5 h-[48px] text-gray-700 whitespace-nowrap border-r border-gray-300 bg-[#E0E0E0] hover:bg-[#D5D5D5] transition-colors duration-200">
-                    All Categories
-                    <IoChevronDown className="w-3.5 h-3.5 text-gray-500" />
-                  </Link>
-                  <form action="/search" method="get" className="flex-1 flex items-center">
-                    <input
-                      type="text"
-                      name="q"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="What are you looking for?"
-                      className="flex-1 h-[48px] px-4 text-gray-700 placeholder-gray-400 outline-none bg-transparent"
-                    />
-                    <button
-                      type="submit"
-                      className="flex items-center justify-center w-[46px] h-[48px] text-gray-600 hover:text-gray-900 transition-colors duration-200"
-                      aria-label="Search"
-                    >
-                      <HiOutlineSearch className="w-5 h-5" />
-                    </button>
-                  </form>
-                </div>
-              </div>
-
-              {/* Right: Icons */}
-              <div className="flex items-center justify-end gap-4 shrink-0">
-                <Link
-                  href="/find-store"
-                  className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap"
-                >
-                  <SlLocationPin className="w-[18px] h-[18px]" />
-                  <span>Find a store</span>
-                </Link>
-
-                <Link
-                  href="/account"
-                  className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap"
-                >
-                  <HiOutlineUser className="w-5 h-5" />
-                  <span>Sign in/ Register</span>
-                </Link>
-
-                <button
-                  onClick={() => window.location.href = '/cart'}
-                  className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors duration-200"
-                  aria-label="Cart"
-                >
-                  <IoBagOutline className="w-[22px] h-[22px] text-gray-700" />
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 3 – Bottom Nav: fast slide */}
-        <div
-          className={`overflow-hidden bg-white transition-all duration-200 ease-out ${
-            showNav ? "max-h-[60px]" : "max-h-0"
-          }`}
-        >
-          <div className="bg-white border-b border-gray-200">
-            <div className="max-w-[1347px] mx-auto px-[16px]">
-              <nav className="flex items-center gap-1 h-[46px]">
-                {navItems.map((item, index) => (
-                  <div
-                    key={item.label}
-                    className="relative h-full flex items-center"
-                    onMouseEnter={() => {
-                      if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
-                      if (item.hasDropdown && item.children) setActiveDropdown(index);
-                    }}
-                    onMouseLeave={() => {
-                      dropdownTimeout.current = setTimeout(() => setActiveDropdown(null), 150);
-                    }}
-                  >
-                    <Link
-                      href={item.href}
-                      className={`flex items-center gap-1 ${index === 0 ? "pl-0" : "pl-3"} pr-3 xl:${index === 0 ? "pl-0" : "pl-4"} xl:pr-4 h-full font-semibold whitespace-nowrap transition-colors duration-200 ${
-                        item.isHighlighted
-                          ? "text-red-600 hover:text-red-700"
-                          : "text-gray-900 hover:text-[#1D349A]"
-                      }`}
-                    >
-                      {item.label}
-                      {item.hasDropdown && (
-                        <IoChevronDown className={`w-3 h-3 ml-0.5 opacity-70 transition-transform duration-200 ${activeDropdown === index ? "rotate-180" : ""}`} />
-                      )}
-                    </Link>
-
-                    {/* Dropdown Panel */}
-                    {item.hasDropdown && item.children && activeDropdown === index && (
-                      <div className="absolute top-full left-0 pt-0 z-50">
-                        <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[220px] mt-0">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.label}
-                              href={child.href}
-                              className="flex flex-col px-4 py-2.5 hover:bg-gray-50 transition-colors"
-                              onClick={() => setActiveDropdown(null)}
-                            >
-                              <span className="text-[14px] font-medium text-gray-900">
-                                {child.label}
-                              </span>
-                              {child.desc && (
-                                <span className="text-[12px] text-gray-400 mt-0.5">
-                                  {child.desc}
-                                </span>
-                              )}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                {countryOpen && (
+                  <div className="absolute right-0 top-full mt-[10px] w-[240px] max-h-[360px] overflow-y-auto rounded-md bg-[#1f1f1f] border border-white/10 shadow-2xl py-1 text-[#fafafa]">
+                    {countries.map((c, i) => (
+                      <button
+                        key={c.name}
+                        onClick={() => { setSelectedCountry(i); setCountryOpen(false); }}
+                        className={`w-full flex items-center justify-between px-4 py-2.5 text-left text-[13px] transition-colors ${i === selectedCountry ? "bg-white/10 font-semibold" : "hover:bg-white/10"}`}
+                      >
+                        <span>{c.name}</span>
+                        <span className="opacity-50">{c.code}</span>
+                      </button>
+                    ))}
                   </div>
-                ))}
-              </nav>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Shadow */}
-        <div
-          className={`pointer-events-none absolute bottom-0 left-0 right-0 translate-y-full h-[20px] transition-opacity duration-200 ease-out ${
-            navCollapsed ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.03) 40%, transparent 100%)",
-          }}
-        />
+        {/* ── Main Header (white) ── */}
+        <div className="relative bg-white h-[80px] flex items-center shadow-sm">
+          <div className="max-w-[1347px] w-full mx-auto px-[36px] flex items-center gap-8">
+
+            {/* Logo */}
+            <Link href="/" className="shrink-0 flex items-center">
+              <span className="font-[var(--font-logo)] text-[28px] font-extrabold tracking-[0.04em] text-gray-900">
+                Digilink<span className="logo-dot">.</span>
+              </span>
+            </Link>
+
+            {/* Center Nav */}
+            <nav className="flex-1 flex items-center justify-center gap-8 h-full">
+              {navItems.map(item => (
+                <div 
+                  key={item.label}
+                  className="h-full flex items-center"
+                  onMouseEnter={item.hasMegaMenu ? handleMenuEnter : undefined}
+                  onMouseLeave={item.hasMegaMenu ? handleMenuLeave : undefined}
+                >
+                  <Link
+                    href={item.href}
+                    aria-label={item.label}
+                    className="group/nav-link relative overflow-hidden h-[20px] flex flex-col whitespace-nowrap"
+                  >
+                    <span className="text-[16px] font-medium text-gray-800 leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full">
+                      {item.label}
+                    </span>
+                    <span className="text-[16px] font-bold text-gray-900 leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full" aria-hidden="true">
+                      {item.label}
+                    </span>
+                  </Link>
+                </div>
+              ))}
+            </nav>
+
+            {/* Right: 3 icons */}
+            <div className="flex items-center gap-3 shrink-0">
+              {/* Search */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                aria-label="Search"
+              >
+                <HiOutlineSearch className="w-[22px] h-[22px]" />
+              </button>
+              {/* Account */}
+              <Link
+                href="/account"
+                className="w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                aria-label="Account"
+              >
+                <HiOutlineUser className="w-[22px] h-[22px]" />
+              </Link>
+              {/* Cart */}
+              <button
+                onClick={() => setCartOpen(true)}
+                className="relative w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                aria-label="Cart"
+              >
+                <IoBagOutline className="w-[23px] h-[23px]" />
+                <span className="absolute top-[6px] right-[4px] w-[18px] h-[18px] bg-[#90d03b] text-[#1a2e05] rounded-full flex items-center justify-center text-[10px] font-bold border border-white">
+                  0
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Mega Menu Overlay inside header flow */}
+          <DesktopMegaMenu 
+            isOpen={megaMenuOpen} 
+            onMouseEnter={handleMenuEnter}
+            onMouseLeave={handleMenuLeave}
+          />
+        </div>
       </header>
 
-      {/* Desktop spacer: full header height */}
+      {/* Spacer */}
       <div aria-hidden="true" style={{ height: spacerHeight }} />
+
+      {/* Drawers outside the fixed header flow */}
+      <DesktopSearchDrawer isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <DesktopCartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
 }

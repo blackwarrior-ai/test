@@ -130,12 +130,6 @@ export function TopBar() {
             Help Center
           </Link>
           <Link
-            href="/find-store"
-            className="hover:text-gray-200 transition-colors duration-200"
-          >
-            Find a Store
-          </Link>
-          <Link
             href="/contact"
             className="hover:text-gray-200 transition-colors duration-200"
           >

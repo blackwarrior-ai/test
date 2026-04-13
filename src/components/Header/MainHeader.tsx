@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { IoChevronDown } from "react-icons/io5";
 import { HiOutlineSearch } from "react-icons/hi";
-import { SlLocationPin } from "react-icons/sl";
 import { HiOutlineUser } from "react-icons/hi2";
 import { IoBagOutline } from "react-icons/io5";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
@@ -93,21 +92,13 @@ export function MainHeader({ isScrolled = false, menuOpen = false, onMenuToggle 
           </div>
 
           {/* Right: Icons */}
-          <div className="flex items-center justify-end gap-4 shrink-0">
-            <Link
-              href="/find-store"
-              className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap"
-            >
-              <SlLocationPin className="w-[18px] h-[18px]" />
-              <span>Find a store</span>
-            </Link>
-
+          <div className="flex items-center justify-end gap-3 shrink-0">
             <Link
               href="/account"
-              className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap"
+              className="flex items-center gap-2 px-4 h-[40px] rounded-full border border-gray-300 text-[14px] font-semibold text-gray-800 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-200 whitespace-nowrap"
             >
-              <HiOutlineUser className="w-5 h-5" />
-              <span>Sign in/ Register</span>
+              <HiOutlineUser className="w-[17px] h-[17px]" />
+              <span>Sign In</span>
             </Link>
 
             <button

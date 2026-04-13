@@ -13,6 +13,15 @@ body {
   padding-right: 16px;
 }
 
+/* ── Announcement bar slide fade-in ── */
+@keyframes ann-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ann-slide {
+  animation: ann-fade-in 0.35s ease-out forwards;
+}
+
 /* Logo dot color cycling animation */
 @keyframes dot-color-cycle {
   0%   { color: #FF6B6B; }
