@@ -64,7 +64,12 @@ export function MainHeader({ isScrolled = false, menuOpen = false, onMenuToggle 
 
             {/* Logo */}
             <Link href="/">
-              <img src="/digilink-logo.svg" alt="Digilink" className="h-[56px] w-auto" />
+              <img 
+                src="/digilink-logo.svg" 
+                alt="Digilink" 
+                className="h-[76px] w-auto" 
+                style={{ imageRendering: 'high-quality', transform: 'translateZ(0)' }}
+              />
             </Link>
           </div>
 
