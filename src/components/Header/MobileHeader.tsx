@@ -125,7 +125,7 @@ export default function MobileHeader() {
               className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center"
             >
               <img 
-                src="/digilink-logo.svg" 
+                src="/digilink-logo-mobile.svg" 
                 alt="Digilink" 
                 className={`h-[48px] w-auto transition-all duration-300 ${
                   scrolled ? "" : "brightness-0 invert"
