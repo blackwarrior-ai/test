@@ -43,7 +43,7 @@ export function MainHeader({ isScrolled = false, menuOpen = false, onMenuToggle 
       {/* The Centered Padding Container */}
       <div className="max-w-[1347px] mx-auto py-[20px] px-[16px]">
         {/* Desktop Layout */}
-        <div className="w-full h-[48px] hidden lg:flex lg:items-center lg:gap-x-[1.2rem]">
+        <div className="w-full h-[60px] hidden lg:flex lg:items-center lg:gap-x-[1.2rem]">
 
           {/* Hamburger + Logo group — shifts left together when scrolled */}
           <div
@@ -64,9 +64,7 @@ export function MainHeader({ isScrolled = false, menuOpen = false, onMenuToggle 
 
             {/* Logo */}
             <Link href="/">
-              <span className="font-[var(--font-logo)] text-[28px] font-extrabold tracking-[0.04em] text-gray-900">
-                Digilink<span className="logo-dot">.</span>
-              </span>
+              <img src="/digilink-logo.svg" alt="Digilink" className="h-[56px] w-auto" />
             </Link>
           </div>
 
@@ -123,9 +121,7 @@ export function MainHeader({ isScrolled = false, menuOpen = false, onMenuToggle 
             </button>
 
             <Link href="/" className="flex items-center justify-center">
-              <span className="font-[var(--font-logo)] text-[24px] font-extrabold tracking-[0.04em] text-gray-900">
-                Digilink<span className="logo-dot">.</span>
-              </span>
+              <img src="/digilink-logo.svg" alt="Digilink" className="h-[24px] w-auto" />
             </Link>
 
             <button

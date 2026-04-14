@@ -283,9 +283,7 @@ export default function DesktopHeader() {
 
             {/* Logo */}
             <Link href="/" className="shrink-0 flex items-center min-w-[120px] px-2">
-              <span className="font-[var(--font-logo)] text-[30px] font-extrabold tracking-[0.04em] text-gray-900 leading-none">
-                Digilink<span className="logo-dot">.</span>
-              </span>
+              <img src="/digilink-logo.svg" alt="Digilink" className="h-[76px] w-auto transition-all duration-300" />
             </Link>
 
             {/* Center Nav */}

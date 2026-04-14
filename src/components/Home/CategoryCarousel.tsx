@@ -4,8 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 const categories = [
-  { label: "AI Assistants", emoji: "🤖" },
-  { label: "Design Tools", emoji: "🎨", hasArrow: true },
+  { label: "AI Assistants", iconSrc: "/ai-assistants.svg" },
+  { label: "Design Tools", iconSrc: "/design-tools.svg", hasArrow: true },
   { label: "Coding", emoji: "💻" },
   { label: "Productivity", emoji: "📋" },
   { label: "Privacy & VPN", emoji: "🔒" },
@@ -145,8 +145,16 @@ export function CategoryCarousel() {
                 className="flex flex-col items-center gap-2.5 min-w-[110px] group shrink-0"
                 style={{ scrollSnapAlign: "start" }}
               >
-                <div className="liquid-fill-circle w-[90px] h-[90px] rounded-full bg-[#F5F5F5] flex items-center justify-center transition-colors duration-200">
-                  <span className="text-[36px]">{cat.emoji}</span>
+                <div className="w-[90px] h-[90px] rounded-full bg-[#F5F5F5] flex items-center justify-center overflow-hidden relative transition-colors duration-200">
+                  {cat.iconSrc ? (
+                    <img
+                      src={cat.iconSrc}
+                      alt={cat.label}
+                      className="w-full h-full object-contain p-4"
+                    />
+                  ) : (
+                    <span className="text-[36px]">{cat.emoji}</span>
+                  )}
                 </div>
                 <span className="text-[13px] font-semibold text-gray-900 whitespace-nowrap flex items-center gap-1">
                   {cat.label}

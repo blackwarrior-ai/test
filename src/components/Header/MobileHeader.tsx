@@ -100,7 +100,7 @@ export default function MobileHeader() {
             scrolled ? "bg-white shadow-sm" : "bg-transparent"
           }`}
         >
-          <div className="relative flex items-center justify-between px-4 h-[60px]">
+          <div className="relative flex items-center justify-between px-4 h-[70px]">
             {/* Left: Hamburger + Search */}
             <div className="flex items-center gap-4">
               <button aria-label="Open menu" onClick={() => setIsMenuOpen(true)}>
@@ -124,13 +124,13 @@ export default function MobileHeader() {
               href="/"
               className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center"
             >
-              <span
-                className={`font-[var(--font-logo)] text-[26px] font-extrabold tracking-[0.04em] transition-colors duration-300 ${
-                  scrolled ? "text-gray-900" : "text-white"
-                }`}
-              >
-                Digilink<span className="logo-dot text-white mix-blend-difference">.</span>
-              </span>
+              <img 
+                src="/digilink-logo.svg" 
+                alt="Digilink" 
+                className={`h-[52px] w-auto transition-all duration-300 ${
+                  scrolled ? "" : "brightness-0 invert"
+                }`} 
+              />
             </Link>
 
             {/* Right: Cart */}

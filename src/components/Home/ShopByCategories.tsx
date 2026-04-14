@@ -5,8 +5,8 @@ import { IoChevronForward } from "react-icons/io5";
 
 const categories = [
   { label: "Sale Items",      emoji: "🔥", isSale: true },
-  { label: "AI Assistants",   emoji: "🤖" },
-  { label: "Design Tools",    emoji: "🎨" },
+  { label: "AI Assistants",   iconSrc: "/ai-assistants.svg" },
+  { label: "Design Tools",    iconSrc: "/design-tools.svg" },
   { label: "Coding",          emoji: "💻" },
   { label: "Productivity",    emoji: "📋" },
   { label: "Privacy & VPN",   emoji: "🔒" },
@@ -61,10 +61,16 @@ export function ShopByCategories() {
                       cat.isSale ? "bg-[#CC2200]" : "bg-[#F0EFED]"
                     }`}
                   >
-                    {cat.isSale ? (
+                  {cat.isSale ? (
                       <span className="text-white text-[22px] font-extrabold tracking-tight">
                         Sale
                       </span>
+                    ) : cat.iconSrc ? (
+                      <img
+                        src={cat.iconSrc}
+                        alt={cat.label}
+                        className="w-full h-full object-contain p-5"
+                      />
                     ) : (
                       <span className="text-[40px]">{cat.emoji}</span>
                     )}
