@@ -287,7 +287,7 @@ export default function DesktopHeader() {
                 src="/digilink-logo.svg" 
                 alt="Digilink" 
                 className="h-[76px] w-auto transition-all duration-300" 
-                style={{ imageRendering: 'high-quality', transform: 'translateZ(0)' }}
+                style={{ imageRendering: 'high-quality' as any, transform: 'translateZ(0)' }}
               />
             </Link>
 

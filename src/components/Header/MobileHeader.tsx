@@ -130,7 +130,7 @@ export default function MobileHeader() {
                 className={`h-[52px] w-auto transition-all duration-300 ${
                   scrolled ? "" : "brightness-0 invert"
                 }`} 
-                style={{ imageRendering: 'high-quality', transform: 'translateZ(0)' }}
+                style={{ imageRendering: 'high-quality' as any, transform: 'translateZ(0)' }}
               />
             </Link>
 
