@@ -127,7 +127,7 @@ export default function MobileHeader() {
               <img 
                 src="/digilink-logo-mobile.svg" 
                 alt="Digilink" 
-                className={`h-[48px] w-auto transition-all duration-300 ${
+                className={`h-[34px] w-auto transition-all duration-300 ${
                   scrolled ? "" : "brightness-0 invert"
                 }`} 
                 style={{ imageRendering: 'high-quality' as any, transform: 'translateZ(0)' }}
