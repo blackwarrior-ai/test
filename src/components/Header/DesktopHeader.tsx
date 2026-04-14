@@ -75,7 +75,7 @@ export default function DesktopHeader() {
 
   const [spacerHeight, setSpacerHeight] = useState(0);
   const [topBarHeight, setTopBarHeight] = useState(0);
-  const [headerOffset, setHeaderOffset] = useState(0);
+  const [isShrunk, setIsShrunk] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   
@@ -101,14 +101,26 @@ export default function DesktopHeader() {
     return () => { clearTimeout(t); window.removeEventListener("resize", measure); };
   }, []);
 
-  /* ── Scroll: slide announcement bar up ── */
-  const handleScroll = useCallback(() => {
-    setHeaderOffset(Math.min(window.scrollY, topBarHeight));
-  }, [topBarHeight]);
+  /* ── Scroll: Native DOM transform for butter-smooth effect ── */
   useEffect(() => {
+    const headerEl = headerRef.current;
+    
+    const handleScroll = () => {
+      const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+      
+      // Directly manipulate DOM to avoid React re-render shivering
+      if (headerEl) {
+        const offset = Math.min(scrollY, topBarHeight || 56);
+        headerEl.style.transform = `translateY(-${offset}px)`;
+      }
+      
+      setIsShrunk(scrollY > (topBarHeight || 56) + 100);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Init status
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+  }, [topBarHeight]);
 
   /* ── Auto-cycle slides ── */
   useEffect(() => {
@@ -146,8 +158,7 @@ export default function DesktopHeader() {
     <>
       <header
         ref={headerRef}
-        className="fixed left-0 right-0 z-50 group/header"
-        style={{ top: `-${headerOffset}px` }}
+        className="fixed left-0 right-0 z-50 group/header will-change-transform"
       >
         {/* ── Dark Backdrop when mega menu is open ── */}
         {megaMenuOpen && (
@@ -264,15 +275,15 @@ export default function DesktopHeader() {
 
         {/* ── Main Header (white) ── */}
         <div 
-          className={`relative bg-white flex items-center shadow-sm transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-            headerOffset > 0 ? "h-[96px]" : "h-[113px]"
+          className={`relative bg-white flex items-center transition-all duration-500 will-change-[height,box-shadow] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+            isShrunk ? "h-[96px] shadow-[0_8px_30px_rgba(0,0,0,0.08)]" : "h-[113px] shadow-none"
           }`}
         >
           <div className="max-w-[1347px] w-full mx-auto px-[36px] flex items-center gap-8">
 
             {/* Logo */}
-            <Link href="/" className="shrink-0 flex items-center">
-              <span className="font-[var(--font-logo)] text-[28px] font-extrabold tracking-[0.04em] text-gray-900">
+            <Link href="/" className="shrink-0 flex items-center min-w-[120px] px-2">
+              <span className="font-[var(--font-logo)] text-[30px] font-extrabold tracking-[0.04em] text-gray-900 leading-none">
                 Digilink<span className="logo-dot">.</span>
               </span>
             </Link>
@@ -291,10 +302,10 @@ export default function DesktopHeader() {
                     aria-label={item.label}
                     className="group/nav-link relative overflow-hidden h-[20px] flex flex-col whitespace-nowrap"
                   >
-                    <span className="text-[16px] font-medium text-gray-800 leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full">
+                    <span className="text-[17px] font-medium text-[#171717] antialiased leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full">
                       {item.label}
                     </span>
-                    <span className="text-[16px] font-bold text-gray-900 leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full" aria-hidden="true">
+                    <span className="text-[17px] font-medium text-[#171717] antialiased leading-[20px] transition-transform duration-300 ease-out group-hover/nav-link:-translate-y-full" aria-hidden="true">
                       {item.label}
                     </span>
                   </Link>
@@ -310,7 +321,7 @@ export default function DesktopHeader() {
                 className="w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
                 aria-label="Search"
               >
-                <HiOutlineSearch className="w-[22px] h-[22px]" />
+                <HiOutlineSearch className="w-[24px] h-[24px]" />
               </button>
               {/* Account */}
               <Link
@@ -318,7 +329,7 @@ export default function DesktopHeader() {
                 className="w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
                 aria-label="Account"
               >
-                <HiOutlineUser className="w-[22px] h-[22px]" />
+                <HiOutlineUser className="w-[24px] h-[24px]" />
               </Link>
               {/* Cart */}
               <button
@@ -326,7 +337,7 @@ export default function DesktopHeader() {
                 className="relative w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
                 aria-label="Cart"
               >
-                <IoBagOutline className="w-[23px] h-[23px]" />
+                <IoBagOutline className="w-[25px] h-[25px]" />
                 <span className="absolute top-[6px] right-[4px] w-[18px] h-[18px] bg-[#90d03b] text-[#1a2e05] rounded-full flex items-center justify-center text-[10px] font-bold border border-white">
                   0
                 </span>
@@ -349,6 +360,10 @@ export default function DesktopHeader() {
       {/* Drawers outside the fixed header flow */}
       <DesktopSearchDrawer isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <DesktopCartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      {/* Separation line below header (only visible when not shrunk) */}
+      {!isShrunk && (
+        <div className="w-full h-px bg-gray-200 absolute left-0 -bottom-px z-10" />
+      )}
     </>
   );
 }

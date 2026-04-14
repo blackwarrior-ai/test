@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Poppins, Barlow } from "next/font/google";
+import { Instrument_Sans, Poppins, Barlow, Inter } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["500"],
+  display: "swap",
 });
 
 export const logoFont = Poppins({
@@ -31,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body className={`${instrumentSans.className} ${logoFont.variable} ${barlowFont.variable} text-[15px] font-medium antialiased`} suppressHydrationWarning>
         {children}
         <Footer />
